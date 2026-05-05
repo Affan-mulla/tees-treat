@@ -152,7 +152,7 @@ export default function Hero({ animateIn = false }: HeroProps) {
         maskImage : "linear-gradient(to bottom, black 70%, transparent 100%)",
         WebkitMaskImage : "linear-gradient(to bottom, black 70%, transparent 100%)"
       }} />
-      <div className="relative z-10 mt-10 flex min-h-svh flex-col items-center px-5 md:px-8 lg:px-16 py-16 md:py-24 lg:py-32 text-center">
+      <div className="relative z-10 flex min-h-svh flex-col items-center  px-5 md:px-8 lg:px-16 py-46 md:py-24 lg:py-32 text-center">
         <p
           ref={taglineRef}
           className="font-outfit text-[clamp(0.7rem,2.6vw,0.85rem)] uppercase tracking-[2.5px] text-chalk/60 z-10"
@@ -161,7 +161,7 @@ export default function Hero({ animateIn = false }: HeroProps) {
         </p>
         <div
           ref={logoWrapRef}
-          className="mt-6 z-10 w-[clamp(260px,75vw,520px)] [&>svg]:w-full [&>svg]:h-auto"
+          className="z-10 w-[clamp(260px,75vw,520px)] [&>svg]:w-full [&>svg]:h-auto"
           aria-label="Tee's Treats logo"
           dangerouslySetInnerHTML={
             logoMarkup ? { __html: logoMarkup } : undefined
@@ -174,16 +174,14 @@ export default function Hero({ animateIn = false }: HeroProps) {
           bgColor="#E8470A"
           textColor="#FFF5EC"
         />
-        <div className="mt-6">
         <div ref={ctaRef}>
           <CTAButton href="/contact-us" label="Contact Us" />
         </div>
-        </div>
       </div>
 
-      <SpinningCookie className="left-1/2 -translate-x-1/2 -bottom-16 md:left-0 md:-translate-x-0 md:-bottom-24" />
+      <SpinningCookie className="left-10 -translate-x-1/2 -bottom-20 md:left-0 md:-translate-x-0 md:-bottom-24" />
 
-      <div className="hidden md:block absolute -bottom-10 right-0 z-10 w-[30vw] max-w-[420px] aspect-square">
+      <div className="block absolute -bottom-10 -right-30 sm:-right-10 z-10 w-[30vw] min-w-[350px] sm:min-h-auto max-w-[420px] aspect-square -rotate-12">
         <Image
           src="/cup.png"
           alt="A delicious cake with pink frosting and sprinkles, representing Tee's Treats' custom cakes."

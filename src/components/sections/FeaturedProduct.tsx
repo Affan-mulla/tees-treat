@@ -158,7 +158,7 @@ function Card({
   return (
     <div
       ref={cardRef}
-      className="sticky top-0 w-full min-h-screen flex items-center overflow-hidden rounded-t-4xl pb-20"
+      className="sticky top-0 w-full min-h-screen flex items-center overflow-hidden pb-20"
       style={{ backgroundColor: card.bg }}
     >
       <div className="w-full max-w-7xl mx-auto px-6 md:px-16 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center py-20">

@@ -132,6 +132,19 @@ export default function CustomCakeBanner() {
           },
         },
       );
+
+      // ── Parallax on section as footer approaches ────────────────────
+      gsap.to(sectionRef.current, {
+        y: -60,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "bottom bottom",
+          end: "bottom top",
+          scrub: 1.8,
+          markers: false,
+        },
+      });
     }, sectionRef);
 
     return () => ctx.revert();

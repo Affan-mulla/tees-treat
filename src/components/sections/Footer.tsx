@@ -143,6 +143,19 @@ export default function Footer() {
         },
       );
 
+      // ── Parallax on footer — moves slower than sections above ──────
+      gsap.to(footerRef.current, {
+        y: 40,
+        ease: "none",
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top bottom",
+          end: "bottom bottom",
+          scrub: 1.0,
+          markers: false,
+        },
+      });
+
       // ── Bottom row fades up ───────────────────────────────────────
       gsap.fromTo(
         bottomRef.current,
@@ -173,7 +186,7 @@ export default function Footer() {
           stagger: 0.035,
           scrollTrigger: {
             trigger: stampRef.current,
-            start: "top 95%",
+            start: "top 75%",
             toggleActions: "play none none reverse",
           },
         },
@@ -198,7 +211,6 @@ export default function Footer() {
         },
       );
     }, footerRef);
-    
 
     return () => ctx.revert();
   }, []);
@@ -254,9 +266,7 @@ export default function Footer() {
             </div>
 
             {/* CTA */}
-              <div className="w-full md:w-auto">
-                <CTAButton href="/contact-us" label="Contact Us" className="w-full justify-center" />
-              </div>
+            <CTAButton href="/contact-us" label="Contact Us" className="" />
           </div>
 
           {/* RIGHT — Info block */}
@@ -351,7 +361,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Tee's Treats. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center gap-4">
-              {["Menu", "Find Us", "Contact Us"].map((item, i) => (
+            {["Menu", "Find Us", "Contact Us"].map((item, i) => (
               <Link
                 key={i}
                 href={`/${item.toLowerCase().replace(" ", "-")}`}

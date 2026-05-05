@@ -277,6 +277,19 @@ export default function ContactPage() {
         }
       );
 
+      // ── Parallax on FAQ section as footer approaches ─────────────
+      gsap.to(faqRef.current, {
+        y: -60,
+        ease: "none",
+        scrollTrigger: {
+          trigger: faqRef.current,
+          start: "bottom bottom",
+          end: "bottom top",
+          scrub: 1.8,
+          markers: false,
+        },
+      });
+
       return () => mm.revert();
     });
     return () => ctx.revert();
@@ -327,7 +340,7 @@ export default function ContactPage() {
   const HEADLINE = "Tell us what you're craving. We'll handle the details.";
 
   return (
-    <main className="bg-[#FFF5EC] min-h-screen relative z-20">
+    <main className="bg-[#FFF5EC] min-h-screen relative z-10">
 
       {/* ── HERO ──────────────────────────────────────────────────────── */}
       <section

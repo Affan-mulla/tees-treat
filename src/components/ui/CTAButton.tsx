@@ -72,7 +72,7 @@ export default function CTAButton({ href, label, className = '' }: CTAButtonProp
       href={href}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className={`relative inline-flex items-center ${className}`}
+      className={`relative inline-flex w-fit items-center ${className}`}
     >
       <span
         ref={arrowPillRef}

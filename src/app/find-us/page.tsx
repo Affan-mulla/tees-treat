@@ -136,13 +136,26 @@ export default function FindUsPage() {
         },
       );
 
+      // ── Parallax on dog banner as footer approaches ─────────────────
+      gsap.to(dogRef.current, {
+        y: -50,
+        ease: "none",
+        scrollTrigger: {
+          trigger: dogRef.current,
+          start: "bottom bottom",
+          end: "bottom top",
+          scrub: 1.8,
+          markers: false,
+        },
+      });
+
       return () => mm.revert();
     });
     return () => ctx.revert();
   }, []);
 
   return (
-    <main className="bg-[#FFF5EC] min-h-screen relative z-10 flex flex-col overflow-hidden">
+    <main className="bg-[#FFF5EC] min-h-screen relative z-10 flex flex-col">
 
       {/* ── NOISE ─────────────────────────────────────────────────────── */}
       <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">

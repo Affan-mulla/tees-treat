@@ -202,9 +202,8 @@ export default function Testimonials() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[#1A1A1A] overflow-hidden py-16 md:py-24 lg:py-32 px-5 md:px-8 lg:px-16"
+      className="relative w-full bg-chalk  py-16 md:py-24 lg:py-32 px-5 md:px-8 lg:px-16"
     >
-
       {/* Noise */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <svg width="100%" height="100%">

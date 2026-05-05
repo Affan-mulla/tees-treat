@@ -79,7 +79,7 @@ export default function SpinningCookie({ className = '' }: SpinningCookieProps) 
         <svg
           ref={ringRef}
           viewBox="0 0 300 300"
-          className="h-[clamp(160px,40vw,280px)] w-[clamp(160px,40vw,280px)] md:h-[clamp(240px,32vw,380px)] md:w-[clamp(240px,32vw,380px)]"
+          className="h-[clamp(310px,40vw,280px)] w-[clamp(310px,40vw,280px)] md:h-[clamp(240px,32vw,380px)] md:w-[clamp(240px,32vw,380px)]"
           aria-hidden="true"
         >
           <defs>
@@ -100,7 +100,7 @@ export default function SpinningCookie({ className = '' }: SpinningCookieProps) 
 
         <div
           ref={cookieRef}
-          className="absolute left-1/2 top-1/2 h-[clamp(200px,44vw,320px)] w-[clamp(200px,44vw,320px)] md:h-[clamp(300px,30vw,420px)] md:w-[clamp(300px,30vw,420px)] -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-1/2 top-1/2 h-[clamp(400px,44vw,320px)] w-[clamp(400px,44vw,320px)] md:h-[clamp(300px,30vw,420px)] md:w-[clamp(300px,30vw,420px)] -translate-x-1/2 -translate-y-1/2"
         >
           <Image
             src="/cookie.png"
