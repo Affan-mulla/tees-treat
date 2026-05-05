@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --color-orange-primary: #e8470a;
+  --color-orange-hover: #f26522;
+  --color-blush: #f2c4ce;
+  --color-cream: #fff5ec;
+  --color-chalk: #1a1a1a;
+
+  --font-caprasimo: "Caprasimo", serif;
+  --font-outfit: "Outfit", sans-serif;
+  --font-dmsans: "DM Sans", sans-serif;
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  
+
+  ::selection {
+    background: #e8470a;
+    color: #fff5ec;
+  }
+
+}
+.sticky {
+  z-index: 1;
+}
