@@ -153,7 +153,7 @@ export default function CustomCakeBanner() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-cream py-16 md:py-24 lg:py-32 flex flex-col items-center justify-center text-center px-5 md:px-8 lg:px-16 rounded-4xl z-10"
+      className="relative w-full bg-cream py-16 md:py-24 lg:py-32 flex flex-col items-center justify-center text-center px-5 md:px-8 lg:px-16 z-10"
     >
       {/* ── Ambient orb — decorative blush glow ───────────────────── */}
       <div

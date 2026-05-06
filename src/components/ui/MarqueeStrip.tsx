@@ -102,7 +102,7 @@ export default function MarqueeStrip({
 
     return (
       <>
-        {Array.from({ length: 2 }).map((_, i) => (
+        {Array.from({ length: 4 }).map((_, i) => (
           <span key={i} className="flex items-center gap-6 pr-6">
             {base}
           </span>
@@ -110,11 +110,10 @@ export default function MarqueeStrip({
       </>
     );
   };
-
   return (
     <div
       ref={wrapperRef}
-      className="absolute left-0 w-screen overflow-hidden py-4"
+      className="absolute left-0 w-screen overflow-hidden py-2 sm:py-3 lg:py-4"
       style={{
         backgroundColor: bgColor,
         transform: `rotate(${rotateDeg}deg) scaleX(1.12)`,
@@ -124,11 +123,11 @@ export default function MarqueeStrip({
     >
       <div
         className="relative flex"
-        style={{ color: textColor, willChange: 'transform', height: '2em' }}
+        style={{ color: textColor, willChange: 'transform', height: '1.25em' }}
       >
         <div
           ref={copy1Ref}
-          className="absolute top-0 left-0 flex items-center whitespace-nowrap font-caprasimo text-[clamp(0.85rem,3vw,1.125rem)]"
+          className="absolute top-0 left-0 flex items-center whitespace-nowrap font-caprasimo text-[clamp(0.85rem,3vw,1.125rem)] h-fit"
         >
           {buildContent()}
         </div>

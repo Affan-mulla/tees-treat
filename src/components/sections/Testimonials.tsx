@@ -58,36 +58,44 @@ export default function Testimonials() {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // ── Animate transition between reviews ────────────────────────────
-  const goTo = useCallback((index: number) => {
-    if (animating) return;
-    setAnimating(true);
+ const goTo = useCallback((index: number) => {
+  if (animating) return;
+  setAnimating(true);
 
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setCurrent(index);
-        setAnimating(false);
-      },
-    });
+  const tl = gsap.timeline({
+    onComplete: () => setAnimating(false),
+  });
 
-    // Exit current — smoother, deliberate exit
-    tl.to([quoteRef.current, nameRef.current, starsRef.current], {
-      y: -20,
-      opacity: 0,
-      duration: 0.4,
-      ease: "cubic-bezier(0.55, 0.055, 0.675, 0.19)",
-      stagger: 0.05,
-    });
+  // EXIT
+  tl.to([quoteRef.current, nameRef.current, starsRef.current], {
+    y: -20,
+    opacity: 0,
+    duration: 0.35,
+    ease: "power2.in",
+    stagger: 0.04,
+  });
 
-    // Enter next — slower, more graceful entrance
-    tl.to([quoteRef.current, nameRef.current, starsRef.current], {
-      y: 0,
-      opacity: 1,
-      duration: 0.7,
-      ease: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-      stagger: 0.05,
-    }, "+=0.1");
+  // CHANGE CONTENT (IMPORTANT)
+  tl.add(() => {
+    setCurrent(index);
+  });
 
-  }, [animating]);
+  // SET INITIAL STATE for new content
+  tl.set([quoteRef.current, nameRef.current, starsRef.current], {
+    y: 20,
+    opacity: 0,
+  });
+
+  // ENTER
+  tl.to([quoteRef.current, nameRef.current, starsRef.current], {
+    y: 0,
+    opacity: 1,
+    duration: 0.6,
+    ease: "power3.out",
+    stagger: 0.05,
+  });
+
+}, [animating]);
 
   const next = useCallback(() => {
     goTo((current + 1) % REVIEWS.length);
@@ -295,15 +303,9 @@ export default function Testimonials() {
             </div>
 
             {/* The quote */}
-            <div ref={quoteRef}>
+            <div ref={quoteRef} className="relative">
               {/* Opening quote mark */}
-              <span
-                className="font-outfit text-[#E8470A] leading-none block mb-2"
-                style={{ fontSize: "clamp(3rem,6vw,5rem)", lineHeight: 0.8, opacity: 0.3 }}
-                aria-hidden="true"
-              >
-                "
-              </span>
+              <span className="absolute -top-10 -left-6 text-[#E8470A] opacity-20 text-9xl font-serif">“</span>
               <blockquote
                 className="font-outfit text-[#FFF5EC] text-[clamp(1.2rem,4vw,2.4rem)] leading-tight tracking-tight"
               >

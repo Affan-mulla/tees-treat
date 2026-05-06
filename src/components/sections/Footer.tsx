@@ -143,19 +143,6 @@ export default function Footer() {
         },
       );
 
-      // ── Parallax on footer — moves slower than sections above ──────
-      gsap.to(footerRef.current, {
-        y: 40,
-        ease: "none",
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: "top bottom",
-          end: "bottom bottom",
-          scrub: 1.0,
-          markers: false,
-        },
-      });
-
       // ── Bottom row fades up ───────────────────────────────────────
       gsap.fromTo(
         bottomRef.current,
@@ -167,7 +154,7 @@ export default function Footer() {
           ease: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           scrollTrigger: {
             trigger: bottomRef.current,
-            start: "top 95%",
+            start: "top 10%",
             toggleActions: "play none none reverse",
           },
         },
@@ -183,30 +170,10 @@ export default function Footer() {
           opacity: 1,
           duration: 0.8,
           ease: "cubic-bezier(0.34, 1.56, 0.64, 1)",
-          stagger: 0.035,
           scrollTrigger: {
             trigger: stampRef.current,
-            start: "top 75%",
+            start: "top 100%",
             toggleActions: "play none none reverse",
-          },
-        },
-      );
-
-      // ── Stamp parallax — moves slower than everything ─────────────
-      // As you scroll into footer, stamp travels upward at 0.6x speed
-      // Creates the layered depth effect — stamp feels like it's on a
-      // different z-layer from the content above it
-      gsap.fromTo(
-        stampRef.current,
-        { y: 60 },
-        {
-          y: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: footerRef.current,
-            start: "top bottom",
-            end: "bottom bottom",
-            scrub: 2,
           },
         },
       );
@@ -218,7 +185,7 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="relative w-full bg-[#1A1A1A] pt-16 md:pt-24 lg:pt-32 pb-0 overflow-hidden"
+      className="relative w-full bg-chalk px-2 pt-16 md:pt-24 lg:pt-32 pb-0 overflow-hidden"
     >
       {/* ── Noise texture ─────────────────────────────────────────── */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -241,7 +208,7 @@ export default function Footer() {
         </svg>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto">
+      <div className="relative z-0 max-w-7xl mx-auto">
         {/* ── ASYMMETRIC TOP SECTION ────────────────────────────────
             Left 55% — brand identity + CTA
             Right 45% — hours + address + socials
@@ -253,7 +220,7 @@ export default function Footer() {
             <div className="flex flex-col gap-4">
               <Link href="/" className="w-fit">
                 <span className="font-caprasimo text-[clamp(2.8rem,5vw,4.5rem)] text-[#E8470A] leading-[1.0] block hover:opacity-80 transition-opacity duration-200">
-                  Tee's Treats
+                  Tee&apos;s Treats
                 </span>
               </Link>
               <p className="font-dmsans text-[#FFF5EC] opacity-60 text-[clamp(0.95rem,3vw,1rem)] leading-[1.8] max-w-xs">
@@ -358,7 +325,7 @@ export default function Footer() {
           className="flex flex-col md:flex-row items-center justify-between gap-3 py-5"
         >
           <p className="font-outfit text-[clamp(0.6rem,2.2vw,0.7rem)] text-[#FFF5EC] opacity-20 tracking-[1px]">
-            © {new Date().getFullYear()} Tee's Treats. All rights reserved.
+            © {new Date().getFullYear()} Tee&apos;s Treats. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center gap-4">
             {["Menu", "Find Us", "Contact Us"].map((item, i) => (
