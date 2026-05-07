@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import useMobile from "@/hooks/useMobile";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -48,6 +49,7 @@ function Stars({ count }: { count: number }) {
 }
 
 export default function Testimonials() {
+  const isMobile = useMobile();
   const sectionRef    = useRef<HTMLElement>(null);
   const quoteRef      = useRef<HTMLDivElement>(null);
   const nameRef       = useRef<HTMLDivElement>(null);
@@ -265,7 +267,9 @@ export default function Testimonials() {
           </div>
 
           {/* Right — Google badge */}
-          <div
+         {
+          !isMobile && (
+             <div
             className="google-badge hidden sm:flex items-center gap-3 px-5 py-3 rounded-full"
             style={{ backgroundColor: "rgba(255,245,236,0.06)", border: "1px solid rgba(255,245,236,0.1)" }}
           >
@@ -289,6 +293,8 @@ export default function Testimonials() {
               </span>
             </div>
           </div>
+          )
+         }
         </div>
 
         {/* ── Large quote block ──────────────────────────────────────── */}

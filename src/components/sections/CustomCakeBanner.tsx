@@ -87,7 +87,7 @@ export default function CustomCakeBanner() {
             delay: 0.1,
             scrollTrigger: {
               trigger: sectionRef.current,
-              start: "top 25%",
+              start: "top 55%",
               toggleActions: "play none none reverse",
             },
           },

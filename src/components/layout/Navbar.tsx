@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import CTAButton from "../ui/CTAButton";
 import HoverFillLink from "../HoverFillLink";
+import useMobile from "@/hooks/useMobile";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -45,7 +45,7 @@ const SOCIALS = [
 ];
 
 export default function Navbar() {
-  const pathname = usePathname();
+  const isMobile = useMobile();
   const navRef = useRef<HTMLElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const mobilePanelRef = useRef<HTMLDivElement>(null);
@@ -131,11 +131,6 @@ export default function Navbar() {
 
     return () => ctx.revert();
   }, []);
-
-  // Close menu on route change
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
 
   useLayoutEffect(() => {
     const mobileMenu = mobileMenuRef.current;
@@ -328,40 +323,45 @@ export default function Navbar() {
       style={{ willChange: "transform, opacity" }}
     >
       <div className="relative mx-auto flex h-full max-w-7xl items-center justify-between px-5 md:px-8 lg:px-16">
-        <div className="hidden items-center gap-2 md:flex">
-          {SOCIALS.map((social) => (
-            <HoverFillLink
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              ariaLabel={social.label}
-              fillClassName="bg-orange-hover"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/15 bg-chalk/40 text-cream shadow-[2px_2px_1px_rgba(0,0,0,0.4)] backdrop-blur-md transition-colors duration-200"
-            >
-              {social.icon}
-            </HoverFillLink>
-          ))}
-        </div>
+        {!isMobile && (
+          <>
+            <div className="hidden items-center gap-2 md:flex">
+              {SOCIALS.map((social) => (
+                <HoverFillLink
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  ariaLabel={social.label}
+                  fillClassName="bg-orange-hover"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/15 bg-chalk/40 text-cream shadow-[2px_2px_1px_rgba(0,0,0,0.4)] backdrop-blur-md transition-colors duration-200"
+                >
+                  {social.icon}
+                </HoverFillLink>
+              ))}
+            </div>
 
-        <div className="hidden items-center gap-1 rounded-full border border-[#FFF5EC]/15 bg-chalk/40 p-1 shadow-[2px_2px_1px_rgba(0,0,0,0.4)] backdrop-blur-md md:flex">
-          {NAV_LINKS.map((link) => (
-            <HoverFillLink
-              key={link.href}
-              href={link.href}
-              fillClassName="bg-orange-hover"
-              className="rounded-full px-4 py-1.5 font-outfit text-[clamp(0.85rem,1.6vw,0.95rem)] font-medium tracking-[0.3px] text-cream transition-colors duration-200"
-            >
-              {link.label}
-            </HoverFillLink>
-          ))}
-        </div>
+            <div className="hidden items-center gap-1 rounded-full border border-[#FFF5EC]/15 bg-chalk/40 p-1 shadow-[2px_2px_1px_rgba(0,0,0,0.4)] backdrop-blur-md md:flex">
+              {NAV_LINKS.map((link) => (
+                <HoverFillLink
+                  key={link.href}
+                  href={link.href}
+                  fillClassName="bg-orange-hover"
+                  className="rounded-full px-4 py-1.5 font-outfit text-[clamp(0.85rem,1.6vw,0.95rem)] font-medium tracking-[0.3px] text-cream transition-colors duration-200"
+                >
+                  {link.label}
+                </HoverFillLink>
+              ))}
+            </div>
 
-        <div className="hidden md:block">
-          <CTAButton href="/contact-us" label="Contact Us" />
-        </div>
+            <div className="hidden md:block">
+              <CTAButton href="/contact-us" label="Contact Us" />
+            </div>
+          </>
+        )}
 
-        <div className="relative z-40 flex w-full items-center justify-between md:hidden">
+        {isMobile && (
+          <div className="relative z-40 flex w-full items-center justify-between md:hidden">
           <Link
             href="/"
             onClick={() => setIsMobileMenuOpen(false)}
@@ -411,14 +411,16 @@ export default function Navbar() {
               </span>
             </button>
           </div>
-        </div>
+          </div>
+        )}
       </div>
 
-      <div
-        ref={mobileMenuRef}
-        className="pointer-events-none absolute inset-x-0 top-0 z-30 h-svh opacity-0 md:hidden"
-        aria-hidden={!isMobileMenuOpen}
-      >
+      {isMobile && (
+        <div
+          ref={mobileMenuRef}
+          className="pointer-events-none absolute inset-x-0 top-0 z-30 h-svh opacity-0 md:hidden"
+          aria-hidden={!isMobileMenuOpen}
+        >
         <div
           data-mobile-menu-backdrop
           className="absolute inset-0 bg-chalk/25 opacity-0 backdrop-blur-sm"
@@ -457,7 +459,7 @@ export default function Navbar() {
 
             <div className="flex flex-1 flex-col justify-between pt-6">
               <nav aria-label="Mobile primary navigation" className="grid gap-3">
-                {NAV_LINKS.map((link, index) => (
+                {NAV_LINKS.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
@@ -542,7 +544,8 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+      )}
     </nav>
   );
 }
