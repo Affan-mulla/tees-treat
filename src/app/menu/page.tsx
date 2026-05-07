@@ -12,6 +12,7 @@ type MenuItem = {
   price: string;
   accent: string;
   tag?: string;
+  image?: string;
 };
 
 type MenuGroup = {
@@ -27,6 +28,8 @@ const weekendSpecials: MenuItem[] = [
     price: "Weekend pour",
     accent: "#F2C4CE",
     tag: "Hot or iced",
+    image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?w=600&q=80&fit=crop",
+    // Nathan Dumlao — iced coffee with cream swirl
   },
   {
     name: "Maple Cinnamon",
@@ -34,6 +37,8 @@ const weekendSpecials: MenuItem[] = [
     price: "Weekend pour",
     accent: "#E8470A",
     tag: "Cold foam",
+    image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=600&q=80&fit=crop",
+    // warm latte overhead
   },
   {
     name: "Cookies & Cream",
@@ -41,6 +46,8 @@ const weekendSpecials: MenuItem[] = [
     price: "Weekend pour",
     accent: "#FFF5EC",
     tag: "Best iced",
+    image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&q=80&fit=crop",
+    // iced mocha dark glass
   },
   {
     name: "Rhubarb & Custard",
@@ -48,6 +55,8 @@ const weekendSpecials: MenuItem[] = [
     price: "Weekend pour",
     accent: "#F6AEC0",
     tag: "Cafe favourite",
+    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80&fit=crop",
+    // pink latte overhead cafe table
   },
   {
     name: "Matcha Cloud",
@@ -55,6 +64,8 @@ const weekendSpecials: MenuItem[] = [
     price: "Weekend pour",
     accent: "#B7D7A8",
     tag: "Matcha",
+    image: "https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?w=600&q=80&fit=crop",
+    // green matcha latte
   },
 ];
 
@@ -68,24 +79,32 @@ const menuGroups: MenuGroup[] = [
         description: "Short, clean, and pulled fresh to order.",
         price: "3.00",
         accent: "#E8470A",
+        image: "https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=600&q=80&fit=crop",
+        // espresso shot close up
       },
       {
         name: "Flat White",
         description: "Velvety milk, balanced espresso, everyday favourite.",
         price: "3.60",
         accent: "#F2C4CE",
+        image: "https://images.unsplash.com/photo-1534040385115-33dcb3acba5b?w=600&q=80&fit=crop",
+        // flat white latte art overhead
       },
       {
         name: "Latte",
         description: "Smooth coffee with a longer, creamier finish.",
         price: "3.80",
         accent: "#F4D38A",
+        image: "https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=600&q=80&fit=crop",
+        // tall latte glass
       },
       {
         name: "Mocha",
         description: "Chocolate comfort with a proper coffee backbone.",
         price: "4.10",
         accent: "#8E5B48",
+        image: "https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=600&q=80&fit=crop",
+        // mocha with cream
       },
     ],
   },
@@ -98,24 +117,32 @@ const menuGroups: MenuGroup[] = [
         description: "Soft middle, crisp edge, rotating flavours.",
         price: "3.50",
         accent: "#E8470A",
+        image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&q=80&fit=crop",
+        // stack of cookies
       },
       {
         name: "Cake Slice",
         description: "Tall sponge, generous filling, made for sharing.",
         price: "4.80",
         accent: "#F2C4CE",
+        image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80&fit=crop",
+        // tall layered cake slice
       },
       {
         name: "Brownie",
         description: "Dense, glossy, chocolate-heavy counter staple.",
         price: "3.80",
         accent: "#5B3A2E",
+        image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&q=80&fit=crop",
+        // close up brownie texture
       },
       {
         name: "Cinnamon Bun",
         description: "Soft swirl, warm spice, icing tucked into every fold.",
         price: "4.20",
         accent: "#D79655",
+        image: "https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=600&q=80&fit=crop",
+        // cinnamon roll overhead
       },
     ],
   },
@@ -128,24 +155,32 @@ const menuGroups: MenuGroup[] = [
         description: "Classic over ice with your choice of milk.",
         price: "4.00",
         accent: "#A8DADC",
+        image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600&q=80&fit=crop",
+        // iced latte tall glass
       },
       {
         name: "Cold Foam Topper",
         description: "Silky sweet cap for the weekend lineup.",
         price: "+0.80",
         accent: "#FFF5EC",
+        image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&q=80&fit=crop",
+        // cold foam close up
       },
       {
         name: "Iced Matcha",
         description: "Bright green tea, soft milk, clean finish.",
         price: "4.50",
         accent: "#B7D7A8",
+        image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600&q=80&fit=crop",
+        // iced matcha green
       },
       {
         name: "House Cooler",
         description: "Refreshing seasonal sip from the fridge.",
         price: "3.90",
         accent: "#F2C4CE",
+        image: "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=600&q=80&fit=crop",
+        // colourful cold drink
       },
     ],
   },
@@ -328,7 +363,7 @@ export default function MenuPage() {
 
             <p
               data-hero-item
-              className="max-w-2xl font-dmsans text-xl leading-[1.35] text-chalk/70 md:text-2xl"
+              className="max-w-2xl font-dmsans text-xl leading-[1.3] tracking-normal text-chalk/70 md:text-2xl"
             >
               Small-batch coffee, weekend-only flavour drops, and a counter
               full of bakes worth planning your route around.
@@ -367,11 +402,10 @@ export default function MenuPage() {
                   className="flex min-w-max items-center gap-8"
                 >
                   <span>Weekend specials</span>
-                  <span className="text-chalk">Cold foam</span>
-                  <span>Daily bakes</span>
-                  <span className="text-blush">Matcha</span>
-                  <span>Coffee house</span>
-                  <span className="text-orange-primary">don&apos;t walk, RUN</span>
+                  <span className="text-chalk">Daily bakes</span>
+                  <span className="text-cream">Matcha</span>
+                  <span className="text-chalk">Coffee house</span>
+                  <span className="text-blush">don&apos;t walk, RUN</span>
                 </div>
               ))}
             </div>
@@ -565,13 +599,16 @@ function MenuCard({
             <path d="M0,0.2 C0.14,0.05 0.35,0.02 0.52,0.12 C0.68,0.22 0.78,0.08 1,0.16 L1,1 L0,1 Z" />
           </clipPath>
         </defs>
-        <rect
-          data-card-wash
+        <image
+        data-card-wash
+          href={item.image}
+          x="0"
+          y="0"
           width="400"
           height="400"
-          fill={item.accent}
+          preserveAspectRatio="xMidYMid slice"
           clipPath={`url(#${clipId})`}
-          opacity={isDark ? 0.92 : 0.34}
+          opacity={isDark ? 0.3 : 0.5 }
         />
       </svg>
 
@@ -601,7 +638,7 @@ function MenuCard({
         </div>
 
         <div>
-          <h3 className="font-caprasimo text-4xl leading-[0.98] md:text-5xl">
+          <h3 className="font-caprasimo text-4xl leading-[0.98]">
             {item.name}
           </h3>
           <p
