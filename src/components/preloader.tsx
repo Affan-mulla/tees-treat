@@ -193,6 +193,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
             width="36%"
             height="36%"
             preserveAspectRatio="xMidYMid meet"
+            
           />
         </g>
 

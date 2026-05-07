@@ -380,8 +380,8 @@ export default function ContactPage() {
         </h1>
 
         <p className="hero-sub font-dmsans text-chalk opacity-50 text-[clamp(0.95rem,3vw,1.125rem)] tracking-tight leading-normal max-w-md mt-6 ">
-          Whether it's coffee for a team, weekend bakes, or a cozy celebration — 
-          drop us a note. We'll reply within 24–48 hours with the next steps.
+          Whether it&apos;s coffee for a team, weekend bakes, or a cozy celebration — 
+          drop us a note. We&apos;ll reply within 24–48 hours with the next steps.
         </p>
       </section>
 
@@ -399,7 +399,7 @@ export default function ContactPage() {
                 Get in touch
               </p>
               <h2 className="font-caprasimo text-[#1A1A1A] text-[clamp(1.8rem,3vw,2.5rem)] leading-[1.1]">
-                We're a small team.<br />We read every message.
+                We&apos;re a small team.<br />We read every message.
               </h2>
               <p className="font-dmsans text-chalk opacity-50 text-[clamp(0.95rem,3vw,1rem)] leading-[1.8]">
                 No bots. No automated replies. Just Tee and the team 
@@ -447,7 +447,7 @@ export default function ContactPage() {
                   Message sent.
                 </h3>
                 <p className="font-dmsans text-[#1A1A1A] opacity-55 text-[clamp(0.95rem,3vw,1rem)] leading-[1.8] max-w-sm">
-                  We've got your message and we'll be back in touch within 48 hours. 
+                  We&apos;ve got your message and we&apos;ll be back in touch within 48 hours. 
                   See you at the weekend.
                 </p>
               </div>

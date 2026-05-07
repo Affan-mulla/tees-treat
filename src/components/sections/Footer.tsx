@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CTAButton from "@/components/ui/CTAButton";
@@ -52,6 +53,7 @@ const SOCIALS = [
   },
 ];
 export default function Footer() {
+  const pathname = usePathname();
   const footerRef = useRef<HTMLElement>(null);
   const revealRef = useRef<HTMLDivElement>(null);
   const wordmarkRef = useRef<HTMLHeadingElement>(null);
@@ -95,7 +97,7 @@ export default function Footer() {
     }, footerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [pathname]);
 
   return (
     <footer
@@ -239,13 +241,10 @@ export default function Footer() {
 
         <div
           data-footer-reveal
-          className="flex gap-4 border-t border-cream/10 py-2 md:items-center md:justify-between"
+          className="flex gap-4 border-t border-cream/10 p-2 md:items-center md:justify-between"
         >
-          <p className="font-outfit text-[10px] font-semibold uppercase tracking-[2px] text-cream/38">
+          <p className="font-outfit text-[8px] font-semibold uppercase tracking-[2px] text-cream/38">
             © {new Date().getFullYear()} Tee&apos;s Treats. All rights reserved.
-          </p>
-          <p className="font-outfit text-[10px] font-semibold uppercase tracking-[2px] text-cream/38">
-            Rutherglen / Glasgow
           </p>
         </div>
       </div>

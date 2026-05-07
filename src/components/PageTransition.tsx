@@ -91,7 +91,7 @@ export default function PageTransition() {
           className="font-caprasimo text-[#FFF5EC] text-[clamp(2rem,6vw,4rem)] leading-none"
           style={{ mixBlendMode: "difference" }}
         >
-          Tee's Treats
+          Tee&apos;s Treats
         </span>
       </div>
     </>

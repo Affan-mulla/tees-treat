@@ -102,7 +102,7 @@ export default function MarqueeStrip({
 
     return (
       <>
-        {Array.from({ length: 4 }).map((_, i) => (
+        {Array.from({ length: 3 }).map((_, i) => (
           <span key={i} className="flex items-center gap-6 pr-6">
             {base}
           </span>

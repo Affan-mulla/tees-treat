@@ -1,16 +1,22 @@
 'use client';
 
 import Link from 'next/link';
-import { useRef } from 'react';
+import { MouseEventHandler, useRef } from 'react';
 import gsap from 'gsap';
 
 interface CTAButtonProps {
   href: string;
   label: string;
   className?: string;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 }
 
-export default function CTAButton({ href, label, className = '' }: CTAButtonProps) {
+export default function CTAButton({
+  href,
+  label,
+  className = '',
+  onClick,
+}: CTAButtonProps) {
   const wrapperRef = useRef<HTMLAnchorElement>(null);
   const arrowPillRef = useRef<HTMLSpanElement>(null);
   const textPillRef = useRef<HTMLSpanElement>(null);
@@ -70,6 +76,7 @@ export default function CTAButton({ href, label, className = '' }: CTAButtonProp
     <Link
       ref={wrapperRef}
       href={href}
+      onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       className={`relative inline-flex w-fit items-center ${className}`}

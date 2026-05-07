@@ -4,7 +4,6 @@ import PageTransition from "@/components/PageTransition";
 import SmoothScroll from "@/components/SmoothScroll";
 import "@/app/globals.css";
 import Footer from "@/components/sections/Footer";
-
 const caprasimo = Caprasimo({
   weight: "400",
   subsets: ["latin"],
