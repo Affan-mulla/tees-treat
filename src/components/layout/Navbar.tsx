@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import CTAButton from "../ui/CTAButton";
 import HoverFillLink from "../HoverFillLink";
@@ -44,11 +45,12 @@ const SOCIALS = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const navRef = useRef<HTMLElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const mobilePanelRef = useRef<HTMLDivElement>(null);
   const lastY = useRef(0);
-  const hidden = useRef(false);
+  const hidden = useRef(true);
   const menuOpenRef = useRef(false);
   const menuTimelineRef = useRef<gsap.core.Timeline | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -130,7 +132,12 @@ export default function Navbar() {
     return () => ctx.revert();
   }, []);
 
+  // Close menu on route change
   useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  useLayoutEffect(() => {
     const mobileMenu = mobileMenuRef.current;
     const mobilePanel = mobilePanelRef.current;
 
@@ -409,7 +416,7 @@ export default function Navbar() {
 
       <div
         ref={mobileMenuRef}
-        className="pointer-events-none absolute inset-x-0 top-0 z-30 h-svh md:hidden"
+        className="pointer-events-none absolute inset-x-0 top-0 z-30 h-svh opacity-0 md:hidden"
         aria-hidden={!isMobileMenuOpen}
       >
         <div
@@ -424,6 +431,7 @@ export default function Navbar() {
           aria-modal="true"
           aria-label="Mobile navigation"
           className="absolute inset-0 min-h-svh overflow-hidden bg-cream text-chalk"
+          style={{ clipPath: "inset(0 0 100% 0 round 0 0 2rem 2rem)" }}
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(232,71,10,0.18),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(242,196,206,0.28),transparent_30%)]" />
           <div
