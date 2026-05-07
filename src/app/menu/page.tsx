@@ -614,7 +614,7 @@ function MenuCard({
 
       <div
         data-card-content
-        className="relative z-10 flex h-full min-h-[260px] flex-col justify-between"
+        className="relative z-10 flex h-full min-h-75 flex-col justify-between"
       >
         <div className="flex items-start justify-between gap-5">
           <span
@@ -637,6 +637,17 @@ function MenuCard({
           </span>
         </div>
 
+        <span
+          className={[
+            "w-fit border px-3 py-2 font-outfit text-[10px] font-semibold uppercase tracking-[2px] lg:hidden",
+            isDark
+              ? "border-cream/14 text-cream/60"
+              : "border-chalk/12 text-chalk/55",
+          ].join(" ")}
+        >
+          Tap for image
+        </span>
+
         <div>
           <h3 className="font-caprasimo text-4xl leading-[0.98]">
             {item.name}
@@ -653,7 +664,7 @@ function MenuCard({
 
         <div className="flex items-center justify-between border-t border-current/12 pt-5">
           <span className="font-outfit text-xs font-semibold uppercase tracking-[2px] opacity-55">
-            {item.price}
+           	£ {item.price}
           </span>
           <span className="h-3 w-3 rounded-full" style={{ background: item.accent }} />
         </div>

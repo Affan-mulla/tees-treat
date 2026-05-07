@@ -5,174 +5,89 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CTAButton from "@/components/ui/CTAButton";
+import HoverFillLink from "../HoverFillLink";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const NAV_LINKS = [
+  { href: "/", label: "Home" },
+  { href: "/menu", label: "Menu" },
+  { href: "/find-us", label: "Find Us" },
+  { href: "/contact-us", label: "Contact Us" },
+];
+
 const HOURS = [
-  { day: "Friday", time: "9am – 5pm" },
-  { day: "Saturday", time: "9am – 5pm" },
-  { day: "Sunday", time: "10am – 4pm" },
+  { day: "Friday", time: "9am - 5pm" },
+  { day: "Saturday", time: "9am - 5pm" },
+  { day: "Sunday", time: "10am - 4pm" },
 ];
 
 const SOCIALS = [
   {
-    label: "Instagram",
     href: "https://www.instagram.com/teestreatsrutherglen/",
+    label: "Instagram",
     icon: (
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-        <circle cx="12" cy="12" r="4" />
-        <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.03.084c-1.277.06-2.149.264-2.91.563a5.9 5.9 0 0 0-2.124 1.388a5.9 5.9 0 0 0-1.38 2.127C.321 4.926.12 5.8.064 7.076s-.069 1.688-.063 4.947s.021 3.667.083 4.947c.061 1.277.264 2.149.563 2.911c.308.789.72 1.457 1.388 2.123a5.9 5.9 0 0 0 2.129 1.38c.763.295 1.636.496 2.913.552c1.278.056 1.689.069 4.947.063s3.668-.021 4.947-.082c1.28-.06 2.147-.265 2.91-.563a5.9 5.9 0 0 0 2.123-1.388a5.9 5.9 0 0 0 1.38-2.129c.295-.763.496-1.636.551-2.912c.056-1.28.07-1.69.063-4.948c-.006-3.258-.02-3.667-.081-4.947c-.06-1.28-.264-2.148-.564-2.911a5.9 5.9 0 0 0-1.387-2.123a5.9 5.9 0 0 0-2.128-1.38c-.764-.294-1.636-.496-2.914-.55C15.647.009 15.236-.006 11.977 0S8.31.021 7.03.084m.14 21.693c-1.17-.05-1.805-.245-2.228-.408a3.7 3.7 0 0 1-1.382-.895a3.7 3.7 0 0 1-.9-1.378c-.165-.423-.363-1.058-.417-2.228c-.06-1.264-.072-1.644-.08-4.848c-.006-3.204.006-3.583.061-4.848c.05-1.169.246-1.805.408-2.228c.216-.561.477-.96.895-1.382a3.7 3.7 0 0 1 1.379-.9c.423-.165 1.057-.361 2.227-.417c1.265-.06 1.644-.072 4.848-.08c3.203-.006 3.583.006 4.85.062c1.168.05 1.804.244 2.227.408c.56.216.96.475 1.382.895s.681.817.9 1.378c.165.422.362 1.056.417 2.227c.06 1.265.074 1.645.08 4.848c.005 3.203-.006 3.583-.061 4.848c-.051 1.17-.245 1.805-.408 2.23c-.216.56-.477.96-.896 1.38a3.7 3.7 0 0 1-1.378.9c-.422.165-1.058.362-2.226.418c-1.266.06-1.645.072-4.85.079s-3.582-.006-4.848-.06m9.783-16.192a1.44 1.44 0 1 0 1.437-1.442a1.44 1.44 0 0 0-1.437 1.442M5.839 12.012a6.161 6.161 0 1 0 12.323-.024a6.162 6.162 0 0 0-12.323.024M8 12.008A4 4 0 1 1 12.008 16A4 4 0 0 1 8 12.008"/>
       </svg>
     ),
   },
   {
-    label: "Facebook",
     href: "https://www.facebook.com/teestreatsrutherglen",
+    label: "Facebook",
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978c.401 0 .955.042 1.468.103a9 9 0 0 1 1.141.195v3.325a9 9 0 0 0-.653-.036a27 27 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.7 1.7 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103l-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647"/>
       </svg>
     ),
   },
   {
-    label: "TikTok",
     href: "https://www.tiktok.com/@teestreatsrutherglen",
+    label: "TikTok",
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.22 8.22 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02c.08 1.53.63 3.09 1.75 4.17c1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97c-.57-.26-1.1-.59-1.62-.93c-.01 2.92.01 5.84-.02 8.75c-.08 1.4-.54 2.79-1.35 3.94c-1.31 1.92-3.58 3.17-5.91 3.21c-1.43.08-2.86-.31-4.08-1.03c-2.02-1.19-3.44-3.37-3.65-5.71c-.02-.5-.03-1-.01-1.49c.18-1.9 1.12-3.72 2.58-4.96c1.66-1.44 3.98-2.13 6.15-1.72c.02 1.48-.04 2.96-.04 4.44c-.99-.32-2.15-.23-3.02.37c-.63.41-1.11 1.04-1.36 1.75c-.21.51-.15 1.07-.14 1.61c.24 1.64 1.82 3.02 3.5 2.87c1.12-.01 2.19-.66 2.77-1.61c.19-.33.4-.67.41-1.06c.1-1.79.06-3.57.07-5.36c.01-4.03-.01-8.05.02-12.07"/>
       </svg>
     ),
   },
 ];
-
-// Big stamp text split into letters for stagger animation
-const STAMP = "TEES TREATS".split("");
-
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
-  const leftRef = useRef<HTMLDivElement>(null);
-  const rightRef = useRef<HTMLDivElement>(null);
-  const dividerRef = useRef<HTMLDivElement>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
-  const stampRef = useRef<HTMLDivElement>(null);
-  const lettersRef = useRef<HTMLSpanElement[]>([]);
+  const revealRef = useRef<HTMLDivElement>(null);
+  const wordmarkRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
+      const revealItems = gsap.utils.toArray<HTMLElement>("[data-footer-reveal]");
 
-      mm.add("(min-width: 768px)", () => {
-        // ── Left col slides in from left ──────────────────────────
-        gsap.fromTo(
-          leftRef.current,
-          { x: -60, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: footerRef.current,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          },
-        );
-
-        // ── Right col slides in from right ────────────────────────
-        gsap.fromTo(
-          rightRef.current,
-          { x: 60, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: footerRef.current,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          },
-        );
-      });
-
-      mm.add("(max-width: 767px)", () => {
-        // ── Mobile fade up to avoid horizontal overflow ──────────
-        gsap.fromTo(
-          [leftRef.current, rightRef.current],
-          { y: 40, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.9,
-            ease: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-            stagger: 0.1,
-            scrollTrigger: {
-              trigger: footerRef.current,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          },
-        );
-      });
-
-      // ── Divider draws left to right ───────────────────────────────
       gsap.fromTo(
-        dividerRef.current,
-        { scaleX: 0, transformOrigin: "left center" },
-        {
-          scaleX: 1,
-          duration: 1.2,
-          ease: "cubic-bezier(0.5, 0, 0.5, 1)",
-          scrollTrigger: {
-            trigger: dividerRef.current,
-            start: "top 92%",
-            toggleActions: "play none none reverse",
-          },
-        },
-      );
-
-      // ── Bottom row fades up ───────────────────────────────────────
-      gsap.fromTo(
-        bottomRef.current,
-        { y: 16, opacity: 0 },
+        revealItems,
+        { y: 36, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.8,
-          ease: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+          duration: 0.85,
+          ease: "power3.out",
+          stagger: 0.07,
           scrollTrigger: {
-            trigger: bottomRef.current,
-            start: "top 10%",
+            trigger: revealRef.current,
+            start: "top 78%",
             toggleActions: "play none none reverse",
           },
         },
       );
 
-      // ── Stamp letters drop in one by one ─────────────────────────
-      // Each letter falls from above with stagger
       gsap.fromTo(
-        lettersRef.current,
-        { y: "100%", opacity: 0 },
+        wordmarkRef.current,
+        { yPercent: 28, opacity: 0 },
         {
-          y: "0%",
+          yPercent: 0,
           opacity: 1,
-          duration: 0.8,
-          ease: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+          duration: 1,
+          ease: "power3.out",
           scrollTrigger: {
-            trigger: stampRef.current,
-            start: "top 100%",
+            trigger: wordmarkRef.current,
+            start: "top 98%",
             toggleActions: "play none none reverse",
           },
         },
@@ -185,191 +100,153 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="relative w-full bg-chalk px-2 pt-16 md:pt-24 lg:pt-32 pb-0 overflow-hidden"
+      className="relative overflow-hidden bg-chalk text-cream "
     >
-      {/* ── Noise texture ─────────────────────────────────────────── */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <svg width="100%" height="100%">
-          <filter id="footer-noise">
+      <div className="pointer-events-none absolute inset-0 opacity-[0.06]" aria-hidden="true">
+        <svg className="h-full w-full">
+          <filter id="footer-grain">
             <feTurbulence
               type="fractalNoise"
-              baseFrequency="0.65"
+              baseFrequency="0.72"
               numOctaves="3"
               stitchTiles="stitch"
             />
             <feColorMatrix type="saturate" values="0" />
           </filter>
-          <rect
-            width="100%"
-            height="100%"
-            filter="url(#footer-noise)"
-            opacity="0.04"
-          />
+          <rect width="100%" height="100%" filter="url(#footer-grain)" />
         </svg>
       </div>
 
-      <div className="relative z-0 max-w-7xl mx-auto">
-        {/* ── ASYMMETRIC TOP SECTION ────────────────────────────────
-            Left 55% — brand identity + CTA
-            Right 45% — hours + address + socials
-        ──────────────────────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-[55fr_45fr] gap-16 md:gap-8 pb-16">
-          {/* LEFT — Brand block */}
-          <div ref={leftRef} className="flex flex-col justify-between gap-12">
-            {/* Brand identity */}
-            <div className="flex flex-col gap-4">
-              <Link href="/" className="w-fit">
-                <span className="font-caprasimo text-[clamp(2.8rem,5vw,4.5rem)] text-[#E8470A] leading-[1.0] block hover:opacity-80 transition-opacity duration-200">
-                  Tee&apos;s Treats
-                </span>
-              </Link>
-              <p className="font-dmsans text-[#FFF5EC] opacity-60 text-[clamp(0.95rem,3vw,1rem)] leading-[1.8] max-w-xs">
-                Coffee House & Bakeshop.
-                <br />
-                Rutherglen, Glasgow.
-                <br />
-                Open three days. Worth every one.
-              </p>
+      <div ref={revealRef} className="relative z-10 ">
+        <div className="grid gap-px overflow-hidden border border-cream/12 bg-cream/12 lg:grid-cols-[1.1fr_0.9fr]">
+          <section data-footer-reveal className="bg-chalk p-6 md:p-10 lg:p-12">
+            <p className="font-outfit text-xs font-semibold uppercase tracking-[3px] text-orange-primary">
+              Coffee house and bakeshop
+            </p>
+
+            <h2 className="mt-6 max-w-4xl font-caprasimo text-5xl leading-[0.95] text-cream md:text-7xl lg:text-8xl">
+              Come for coffee. Leave with cake.
+            </h2>
+
+            <p className="mt-6 max-w-xl font-dmsans text-lg leading-[1.55] text-cream/62 md:text-xl">
+              Small-batch treats from Rutherglen, open three days a week and
+              worth planning around.
+            </p>
+
+            <div className="mt-10">
+              <CTAButton href="/contact-us" label="Order Enquiry" />
             </div>
+          </section>
 
-            {/* CTA */}
-            <CTAButton href="/contact-us" label="Contact Us" className="" />
-          </div>
-
-          {/* RIGHT — Info block */}
-          <div ref={rightRef} className="flex flex-col gap-10">
-            {/* Hours */}
-            <div className="flex flex-col gap-2">
-              <p className="font-outfit text-[clamp(0.6rem,2.2vw,0.7rem)] uppercase tracking-[3px] text-[#FFF5EC] opacity-25 mb-3">
-                Opening Hours
+          <section className="grid gap-px bg-cream/12 md:grid-cols-2 lg:grid-cols-1">
+            <div data-footer-reveal className="bg-chalk p-6 md:p-8">
+              <p className="font-outfit text-xs font-semibold uppercase tracking-[3px] text-cream/38">
+                Visit
               </p>
-              {HOURS.map((h) => (
-                <div
-                  key={h.day}
-                  className="flex items-center justify-between py-3 border-b border-[#FFF5EC]/8"
-                >
-                  <span className="font-outfit font-semibold text-cream text-[clamp(1rem,3vw,1.2rem)] leading-none">
-                    {h.day}
-                  </span>
-                  <span className="font-outfit text-[clamp(0.7rem,2.4vw,0.8rem)] text-cream opacity-60 tracking-[1px]">
-                    {h.time}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Address */}
-            <div className="flex flex-col gap-2">
-              <p className="font-outfit text-[clamp(0.6rem,2.2vw,0.7rem)] uppercase tracking-[3px] text-[#FFF5EC] opacity-55 mb-1">
-                Find Us
-              </p>
-              <address className="not-italic font-dmsans text-[#FFF5EC] opacity-50 text-[clamp(0.85rem,2.8vw,0.95rem)] leading-[1.8]">
+              <address className="mt-5 not-italic font-caprasimo text-3xl leading-[1.05] text-cream md:text-4xl">
                 90 Stonelaw Road
                 <br />
                 Rutherglen, Glasgow
               </address>
             </div>
 
-            {/* Socials + dog friendly */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-5">
-                {SOCIALS.map((s) => (
-                  <Link
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={s.label}
-                    className="text-[#FFF5EC] opacity-70 hover:opacity-100 hover:text-[#E8470A] transition-all duration-200"
+            <div data-footer-reveal className="bg-chalk p-6 md:p-8">
+              <p className="font-outfit text-xs font-semibold uppercase tracking-[3px] text-cream/38">
+                Opening Hours
+              </p>
+
+              <div className="mt-5 grid gap-3">
+                {HOURS.map((item) => (
+                  <div
+                    key={item.day}
+                    className="flex min-h-11 items-center justify-between border-b border-cream/10 pb-3"
                   >
-                    {s.icon}
-                  </Link>
+                    <span className="font-outfit text-sm font-semibold uppercase tracking-[1px] text-cream">
+                      {item.day}
+                    </span>
+                    <span className="font-dmsans text-sm text-cream/60">
+                      {item.time}
+                    </span>
+                  </div>
                 ))}
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm size-5 text-cream">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    role="img"
-                    className="iconify iconify--ph"
-                    width="100%"
-                    height="100%"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 256 256"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M104 140a12 12 0 1 1-12-12a12 12 0 0 1 12 12Zm60 12a12 12 0 1 0-12-12a12 12 0 0 0 12 12Zm68.7-8a16.1 16.1 0 0 1-6.7 1.4a15.6 15.6 0 0 1-10-3.6V184a40 40 0 0 1-40 40H80a40 40 0 0 1-40-40v-42.2a15.6 15.6 0 0 1-10 3.6a16.1 16.1 0 0 1-6.7-1.4a15.8 15.8 0 0 1-9.1-17.6l16.4-87.5a16.1 16.1 0 0 1 19.6-12.6L105 40h46l54.8-13.7a16.1 16.1 0 0 1 19.6 12.6l16.4 87.5a15.8 15.8 0 0 1-9.1 17.6ZM200 122l-51.9-66h-40.2L56 122v62a24.1 24.1 0 0 0 24 24h40v-12.7l-13.7-13.6a8.1 8.1 0 0 1 11.4-11.4l10.3 10.4l10.3-10.4a8.1 8.1 0 0 1 11.4 11.4L136 195.3V208h40a24.1 24.1 0 0 0 24-24Z"
-                    ></path>
-                  </svg>
-                </span>
-                <span className="font-outfit text-[clamp(0.6rem,2.2vw,0.7rem)] text-[#FFF5EC] opacity-75 tracking-[1px] uppercase">
-                  Dog Friendly
-                </span>
-              </div>
+            </div>
+          </section>
+        </div>
+
+        <div className="grid gap-px border-x border-b border-cream/12 bg-cream/12 md:grid-cols-3">
+          <nav data-footer-reveal className="bg-chalk p-6 md:p-8" aria-label="Footer navigation">
+            <p className="font-outfit text-xs font-semibold uppercase tracking-[3px] text-cream/38">
+              Pages
+            </p>
+            <div className="mt-5 grid gap-2">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="flex min-h-11 items-center justify-between border-b border-cream/10 font-caprasimo text-2xl leading-none text-cream transition-colors duration-200 hover:text-orange-primary"
+                >
+                  {link.label}
+                  <span className="font-outfit text-xs text-orange-primary">Go</span>
+                </Link>
+              ))}
+            </div>
+          </nav>
+
+          <div data-footer-reveal className="bg-chalk p-6 md:p-8">
+            <p className="font-outfit text-xs font-semibold uppercase tracking-[3px] text-cream/38">
+              Social
+            </p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              {SOCIALS.map((social) => (
+                <HoverFillLink
+                  key={social.href}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  fillClassName="bg-orange-primary"
+                  className="flex items-center  gap-2 rounded-full border border-cream/10 px-4 py-2 text-sm font-medium text-cream transition-colors duration-200"
+                >
+                  <div className="flex gap-2 items-center justify-center">
+                    
+                  <span className="text-lg">{social.icon}</span>
+                  <p className="">{social.label}</p>
+                  </div>
+                </HoverFillLink>
+              ))}
             </div>
           </div>
-        </div>
 
-        {/* ── DIVIDER ───────────────────────────────────────────────── */}
-        <div
-          ref={dividerRef}
-          className="w-full h-px bg-[#FFF5EC]/8"
-          style={{ transformOrigin: "left center" }}
-        />
-
-        {/* ── BOTTOM ROW ────────────────────────────────────────────── */}
-        <div
-          ref={bottomRef}
-          className="flex flex-col md:flex-row items-center justify-between gap-3 py-5"
-        >
-          <p className="font-outfit text-[clamp(0.6rem,2.2vw,0.7rem)] text-[#FFF5EC] opacity-20 tracking-[1px]">
-            © {new Date().getFullYear()} Tee&apos;s Treats. All rights reserved.
-          </p>
-          <div className="flex flex-wrap items-center gap-4">
-            {["Menu", "Find Us", "Contact Us"].map((item, i) => (
-              <Link
-                key={i}
-                href={`/${item.toLowerCase().replace(" ", "-")}`}
-                className="min-h-[44px] px-2 font-outfit text-[clamp(0.6rem,2.2vw,0.7rem)] text-[#FFF5EC] opacity-80 hover:opacity-60 hover:text-orange-hover hover:opacity-100 tracking-[1px] uppercase transition-all duration-200 flex items-center"
-              >
-                {item}
-              </Link>
-            ))}
+          <div data-footer-reveal className="bg-chalk p-6 md:p-8">
+            <p className="font-outfit text-xs font-semibold uppercase tracking-[3px] text-cream/38">
+              Notes
+            </p>
+            <p className="mt-5 font-dmsans text-base leading-[1.55] text-cream/62">
+              Dog friendly, custom cake friendly, and usually sold out faster
+              than planned.
+            </p>
           </div>
         </div>
-      </div>
 
-      {/* ── FULL BLEED STAMP ──────────────────────────────────────────
-          "TEE'S TREATS" spans the entire footer width.
-          Each letter is individually referenced for stagger animation.
-          overflow-hidden on parent clips letters as they drop in.
-          pb-0 on footer means this sits flush at the very bottom.
-      ──────────────────────────────────────────────────────────────── */}
-      <div
-        ref={stampRef}
-        className="w-full overflow-hidden"
-        aria-hidden="true"
-        style={{ willChange: "transform" }}
-      >
-        {/* Letter-spacing and font-size tuned so text spans full width */}
-        <div className="flex  w-full justify-between ">
-          {STAMP.map((letter, i) => (
-            <span
-              key={i}
-              ref={(el) => {
-                if (el) lettersRef.current[i] = el;
-              }}
-              className="inline-block font-outfit text-cream/20 leading-[0.75] select-none pointer-events-none  text-[clamp(4rem,15vw,20rem)] "
-              style={{
-                opacity: letter === "'" || letter === " " ? 0.06 : 0.06,
-                willChange: "transform, opacity",
-              }}
-            >
-              {letter === " " ? "\u00A0" : letter}
-            </span>
-          ))}
+        <div className="relative overflow-hidden bg-chalk">
+          <h2
+            ref={wordmarkRef}
+            className="select-none font-caprasimo text-[clamp(3.7rem,15vw,17rem)] leading-[0.72] text-cream/10  md:tracking-wider"
+          >
+            Tee&apos;s Treats
+          </h2>
+        </div>
+
+        <div
+          data-footer-reveal
+          className="flex gap-4 border-t border-cream/10 py-2 md:items-center md:justify-between"
+        >
+          <p className="font-outfit text-[10px] font-semibold uppercase tracking-[2px] text-cream/38">
+            © {new Date().getFullYear()} Tee&apos;s Treats. All rights reserved.
+          </p>
+          <p className="font-outfit text-[10px] font-semibold uppercase tracking-[2px] text-cream/38">
+            Rutherglen / Glasgow
+          </p>
         </div>
       </div>
     </footer>
