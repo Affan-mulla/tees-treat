@@ -56,6 +56,17 @@ export const metadata: Metadata = {
     "Tee's Treats",
     "weekend coffee Rutherglen",
     "bakes Glasgow",
+    "best coffee Rutherglen",
+    "freshly baked bread Rutherglen",
+    "vegan cakes Glasgow",
+    "specialty coffee Rutherglen",
+    "weekend brunch Rutherglen",
+    "dog friendly coffee shop Glasgow",
+    "custom celebration cakes Glasgow",
+    "artisan coffee Rutherglen",
+    "local bakery Glasgow",
+    "Rutherglen cafes",
+    "Glasgow bakehouse",
   ],
 
   // ── Canonical & Alternates ──────────────────────────────────────────────

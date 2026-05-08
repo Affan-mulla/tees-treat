@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /basket/
+Disallow: /checkout/
+Disallow: /api/
+
+Sitemap: https://tees-treat.vercel.app/sitemap.xml
+
+# Tee's Treats - Coffee House & Bakeshop
+# Rutherglen, Glasgow
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
