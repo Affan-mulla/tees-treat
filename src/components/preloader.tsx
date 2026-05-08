@@ -72,7 +72,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       tl.to([leftGroupRef.current, rightGroupRef.current], {
         opacity: 1,
         y: 0,
-        duration: 0.8,
+        duration: 0.5,
         ease: "back.out(1.4)",
         stagger: 0,
       });
@@ -87,7 +87,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       });
       tl.to([crackRef.current, glowRef.current], {
         strokeDashoffset: 0,
-        duration: 0.7,
+        duration: 0.5,
         ease: "power2.inOut",
       });
 

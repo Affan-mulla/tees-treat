@@ -1,17 +1,11 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { Observer } from "gsap/Observer";
-import Image from "next/image";
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { Observer } from 'gsap/Observer';
+import Image from 'next/image';
 
-interface SpinningCookieProps {
-  className?: string;
-}
-
-export default function SpinningCookie({
-  className = "",
-}: SpinningCookieProps) {
+export default function SpinningCookie() {
   const containerRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<SVGSVGElement>(null);
   const cookieRef = useRef<HTMLDivElement>(null);
@@ -23,7 +17,7 @@ export default function SpinningCookie({
     let targetSpeed = 0.12;
     let ringRotation = 0;
     let cookieRotation = 0;
-    let observer: Observer | null = null;
+    let observer: ReturnType<typeof Observer.create> | null = null;
 
     const update = () => {
       const delta = gsap.ticker.deltaRatio(60);
@@ -33,18 +27,18 @@ export default function SpinningCookie({
 
       gsap.set(ringRef.current, {
         rotation: ringRotation,
-        transformOrigin: "50% 50%",
+        transformOrigin: '50% 50%',
       });
       gsap.set(cookieRef.current, {
         rotation: cookieRotation,
-        transformOrigin: "50% 50%",
+        transformOrigin: '50% 50%',
       });
     };
 
     const ctx = gsap.context(() => {
       observer = Observer.create({
         target: window,
-        type: "wheel,scroll,touch",
+        type: 'wheel,scroll,touch',
         onDown: (self) => {
           const boost = Math.min(Math.abs(self.velocityY) * 0.0012, 1.2);
           targetSpeed = 0.12 + boost;
@@ -68,50 +62,45 @@ export default function SpinningCookie({
     };
   }, []);
 
-  const ringText = "COFFEE & BAKESHOP · OPEN FRI SAT SUN · RUTHERGLEN · ";
+  const ringText = 'COFFEE & BAKESHOP · OPEN FRI SAT SUN · RUTHERGLEN · ';
   const ringTextRepeat = `${ringText}${ringText}`;
 
   return (
-    <div
-      ref={containerRef}
-      className={`absolute left-0 bottom-2 sm:bottom-0 z-20 ${className}`}
-    >
-      <div className="relative">
-        <svg
-          ref={ringRef}
-          viewBox="0 0 300 300"
-          className="h-[clamp(200px,38vw,280px)] w-[clamp(200px,38vw,280px)] md:h-[clamp(240px,32vw,380px)] md:w-[clamp(240px,32vw,380px)]"
-          aria-hidden="true"
-        >
-          <defs>
-            <path
-              id="cookieTextPath"
-              d="M150,150 m-120,0 a120,120 0 1,1 240,0 a120,120 0 1,1 -240,0"
-            />
-          </defs>
-          <text
-            className="font-outfit text-[clamp(1.1rem,3vw,1.4rem)] tracking-[3px]"
-            fill="var(--color-chalk)"
-          >
-            <textPath href="#cookieTextPath" startOffset="0%">
-              {ringTextRepeat}
-            </textPath>
-          </text>
-        </svg>
-
-        <div
-          ref={cookieRef}
-          className="absolute left-1/2 top-1/2 h-[clamp(260px,42vw,320px)] w-[clamp(260px,42vw,320px)] md:h-[clamp(300px,30vw,420px)] md:w-[clamp(300px,30vw,420px)] -translate-x-1/2 -translate-y-1/2"
-        >
-          <Image
-            src="/cookie.png"
-            alt="Tee's Treats cookie"
-            fill
-            sizes="(max-width: 768px) 280px, 420px"
-            className="object-contain"
-            priority
+    <div ref={containerRef} className="relative">
+      <svg
+        ref={ringRef}
+        viewBox="0 0 300 300"
+        className="h-[clamp(160px,40vw,280px)] w-[clamp(160px,40vw,280px)] md:h-[clamp(240px,32vw,380px)] md:w-[clamp(240px,32vw,380px)]"
+        aria-hidden="true"
+      >
+        <defs>
+          <path
+            id="cookieTextPath"
+            d="M150,150 m-120,0 a120,120 0 1,1 240,0 a120,120 0 1,1 -240,0"
           />
-        </div>
+        </defs>
+        <text
+          className="font-outfit text-[clamp(1.1rem,3vw,1.4rem)] tracking-[3px]"
+          fill="var(--color-chalk)"
+        >
+          <textPath href="#cookieTextPath" startOffset="0%">
+            {ringTextRepeat}
+          </textPath>
+        </text>
+      </svg>
+
+      <div
+        ref={cookieRef}
+        className="absolute left-1/2 top-1/2 h-[clamp(200px,44vw,320px)] w-[clamp(200px,44vw,320px)] md:h-[clamp(300px,30vw,420px)] md:w-[clamp(300px,30vw,420px)] -translate-x-1/2 -translate-y-1/2"
+      >
+        <Image
+          src="/cookie.png"
+          alt="Tee's Treats cookie"
+          fill
+          sizes="(max-width: 768px) 280px, 420px"
+          className="object-contain"
+          priority
+        />
       </div>
     </div>
   );

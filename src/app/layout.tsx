@@ -2,6 +2,7 @@ import { Caprasimo, Outfit, DM_Sans } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import PageTransition from "@/components/PageTransition";
 import SmoothScroll from "@/components/SmoothScroll";
+import { PreloaderProvider } from "@/components/PreloaderProvider";
 import "@/app/globals.css";
 import Footer from "@/components/sections/Footer";
 const caprasimo = Caprasimo({
@@ -37,20 +38,22 @@ export default function RootLayout({
           bg-cream text-chalk font-dmsans relative
         `}
       >
-        {/* Page transition overlay — sits above everything */}
-        <PageTransition />
+        <PreloaderProvider>
+          {/* Page transition overlay — sits above everything */}
+          <PageTransition />
 
-        {/* Smooth scrolling + GSAP ScrollTrigger sync */}
-        <SmoothScroll />
+          {/* Smooth scrolling + GSAP ScrollTrigger sync */}
+          <SmoothScroll />
 
-        {/* Navbar — fixed, always visible */}
-        <Navbar />
+          {/* Navbar — fixed, always visible */}
+          <Navbar />
 
-        {/* Page content */}
-        {children}
-        
-        {/* Footer — visible on all pages */}
-        <Footer />
+          {/* Page content */}
+          {children}
+          
+          {/* Footer — visible on all pages */}
+          <Footer />
+        </PreloaderProvider>
       </body>
     </html>
   );
