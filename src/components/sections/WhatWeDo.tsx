@@ -188,7 +188,7 @@ export default function WhatWeDo() {
           }}
         >
           <Image
-            src="https://instagram.famd5-3.fna.fbcdn.net/v/t51.82787-15/649171597_18097867253479699_6458265785197251226_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=102&ig_cache_key=Mzg0NzY0NjY4MDU0Mzk3MzM4Nw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTkyMC5zZHIuQzMifQ%3D%3D&_nc_ohc=Ll01LbdS8hcQ7kNvwEFhPph&_nc_oc=AdoNqgHS-ancPzpZjoR-WbQYzK1_U1WBCCyMYuDFP9FOABB3-IesvQsfSTNwsVWEA2DjYPmo1W35cw2WHEd6Ic7F&_nc_ad=z-m&_nc_cid=1174&_nc_zt=23&_nc_ht=instagram.famd5-3.fna&_nc_gid=AAns1u7se4GUYS5PyKvHtQ&_nc_ss=7a22e&oh=00_Af73h_vq8BXF2efLuz1nsn6cJ2CA1KBQjxBE3BAuex9Cxw&oe=69FCCDE9"
+            src="/coofee.jpg"
             alt="Drink"
             fill
             className="object-cover"
@@ -209,7 +209,7 @@ export default function WhatWeDo() {
           }}
         >
           <Image
-            src="https://instagram.famd5-4.fna.fbcdn.net/v/t51.82787-15/587815656_18088280603479699_5905546330934307045_n.jpg?stp=dst-jpegr_e35_p640x640_sh2.08_tt6&_nc_cat=111&ig_cache_key=Mzc4MDEyODkzNTk5MjkxODExOQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTkyMC5oZHIuQzMifQ%3D%3D&_nc_ohc=fgt8pa5DpT4Q7kNvwEiOvPf&_nc_oc=AdppEg0IuiSgLGnwUJRQOMBVF_Ni2-bOaY-NpW5NELRDvfonecO0vecmm4jajfdnAIm7hF7q9AHAqsT_quOIxOHQ&_nc_ad=z-m&_nc_cid=1174&_nc_zt=23&se=-1&_nc_ht=instagram.famd5-4.fna&_nc_gid=sjsZ6HM0GEpBYKSWXvhELw&_nc_ss=7a22e&oh=00_Af7IzvOOBVAdVqIZ_X97t6YcDhClXNPZYVFHym6ZVe4K0A&oe=69FCB409"
+            src="/bake.jpg"
             alt="Cake"
             fill
             className="object-cover"

@@ -187,6 +187,7 @@ export default function Hero() {
           aria-label="Tee's Treats logo"
           style={{ opacity: 0 }} // SSR-safe initial hide
           dangerouslySetInnerHTML={logoMarkup ? { __html: logoMarkup } : undefined}
+          role="img"
         />
 
         <MarqueeStrip

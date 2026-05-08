@@ -172,8 +172,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           {/* Orange background fills full canvas — clip cuts it */}
           <rect width="390" height="844" fill="#E8470A" />
           <image
-            xlinkHref="/cookie.png"
-            href="/cookie.png"
+            xlinkHref="/cookie.webp"
+            href="/cookie.webp"
             x="32%"
             y="32%"
             width="36%"
@@ -186,8 +186,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         <g ref={rightGroupRef} clipPath="url(#tt-right-clip)">
           <rect width="390" height="844" fill="#E8470A" />
           <image
-            xlinkHref="/cookie.png"
-            href="/cookie.png"
+            xlinkHref="/cookie.webp"
+            href="/cookie.webp"
             x="32%"
             y="32%"
             width="36%"

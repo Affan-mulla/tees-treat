@@ -94,7 +94,7 @@ export default function SpinningCookie() {
         className="absolute left-1/2 top-1/2 h-[clamp(200px,44vw,320px)] w-[clamp(200px,44vw,320px)] md:h-[clamp(300px,30vw,420px)] md:w-[clamp(300px,30vw,420px)] -translate-x-1/2 -translate-y-1/2"
       >
         <Image
-          src="/cookie.png"
+          src="/cookie.webp"
           alt="Tee's Treats cookie"
           fill
           sizes="(max-width: 768px) 280px, 420px"
