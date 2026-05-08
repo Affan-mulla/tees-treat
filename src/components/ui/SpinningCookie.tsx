@@ -100,6 +100,7 @@ export default function SpinningCookie() {
           sizes="(max-width: 768px) 280px, 420px"
           className="object-contain"
           priority
+          fetchPriority="high"
         />
       </div>
     </div>

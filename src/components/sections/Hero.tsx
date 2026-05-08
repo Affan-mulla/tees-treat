@@ -224,6 +224,7 @@ export default function Hero() {
           fill
           sizes="(max-width: 1024px) 30vw, 420px"
           className="object-contain"
+          fetchPriority="high"
         />
       </div>
     </section>
