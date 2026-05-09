@@ -188,8 +188,8 @@ export default function RootLayout({
               ],
               sameAs: [
                 "https://www.instagram.com/teestreatsrutherglen/",
-                "https://www.facebook.com/teestreatsrutherglen",
-                "https://www.tiktok.com/@teestreatsrutherglen",
+                "https://www.facebook.com/p/Tees-Treats-Rutherglen-100053975053215/",
+                "https://www.tiktok.com/discover/tees-treats-rutherglen",
               ],
               image: `${SITE_URL}/og-image.jpg`,
               aggregateRating: {
