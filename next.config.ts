@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins : ["http://localhost:3000", "10.81.85.110"],
   images: {
     // Tell next/image what breakpoints to generate optimised sizes for.
     // Default is [640,750,828,1080,1200,1920,2048,3840] — too many variants.

@@ -405,7 +405,7 @@ export default function MenuPage() {
                   <span className="text-chalk">Daily bakes</span>
                   <span className="text-cream">Matcha</span>
                   <span className="text-chalk">Coffee house</span>
-                  <span className="text-blush">don&apos;t walk, RUN</span>
+                  <span className="text-cream">don&apos;t walk, RUN</span>
                 </div>
               ))}
             </div>
@@ -663,9 +663,22 @@ function MenuCard({
         </div>
 
         <div className="flex items-center justify-between border-t border-current/12 pt-5">
-          <span className="font-outfit text-xs font-semibold uppercase tracking-[2px] opacity-55">
-           	£ {item.price}
-          </span>
+          {
+            item.price === "Weekend pour" ? (
+              <span className="font-outfit text-xs font-semibold uppercase tracking-[2px] text-orange-primary">
+                {item.price}
+              </span>
+            ) : (
+              <span
+                className={[
+                  "font-outfit text-sm font-semibold uppercase tracking-[2px]",
+                  isDark ? "text-cream" : "text-chalk",
+                ].join(" ")}
+              >
+                £{item.price}
+              </span>
+            )
+          }
           <span className="h-3 w-3 rounded-full" style={{ background: item.accent }} />
         </div>
       </div>

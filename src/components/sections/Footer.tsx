@@ -176,7 +176,7 @@ export default function Footer() {
           </section>
         </div>
 
-        <div className="grid gap-px border-x border-b border-cream/12 bg-cream/12 md:grid-cols-3">
+        <div className="grid gap-px border-x border-b border-cream/12 bg-cream/12 md:grid-cols-2">
           <nav data-footer-reveal className="bg-chalk p-6 md:p-8" aria-label="Footer navigation">
             <p className="font-outfit text-xs font-semibold uppercase tracking-[3px] text-cream/38">
               Pages
@@ -218,30 +218,11 @@ export default function Footer() {
               ))}
             </div>
           </div>
-
-          <div data-footer-reveal className="bg-chalk p-6 md:p-8">
-            <p className="font-outfit text-xs font-semibold uppercase tracking-[3px] text-cream/38">
-              Notes
-            </p>
-            <p className="mt-5 font-dmsans text-base leading-[1.55] text-cream/62">
-              Dog friendly, custom cake friendly, and usually sold out faster
-              than planned.
-            </p>
-          </div>
-        </div>
-
-        <div className="relative overflow-hidden bg-chalk">
-          <h2
-            ref={wordmarkRef}
-            className="select-none font-caprasimo text-[clamp(3.7rem,15vw,17rem)] leading-[0.72] text-cream/10  md:tracking-wider"
-          >
-            Tee&apos;s Treats
-          </h2>
         </div>
 
         <div
           data-footer-reveal
-          className="flex gap-4 border-t border-cream/10 p-2 md:items-center md:justify-between"
+          className="flex gap-4 p-1 md:items-center md:justify-between"
         >
           <p className="font-outfit text-[8px] font-semibold uppercase tracking-[2px] text-cream/38">
             © {new Date().getFullYear()} Tee&apos;s Treats. All rights reserved.

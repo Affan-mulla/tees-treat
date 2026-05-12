@@ -154,7 +154,7 @@ export default function WhatWeDo() {
           {LINES.map((line, i) => (
             <div key={i} className="line overflow-hidden mb-2">
               <span
-                className={`inline-block text-[clamp(1rem,6vw,5.5rem)] leading-none ${
+                className={`inline-block text-[clamp(1.7rem,6vw,5.5rem)] leading-none ${
                   line.accent
                     ? "font-caprasimo text-[#E8470A]"
                     : "font-outfit font-bold text-[#1A1A1A]"

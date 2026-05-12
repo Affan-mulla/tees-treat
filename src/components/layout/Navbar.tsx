@@ -333,7 +333,7 @@ export default function Navbar() {
                   target="_blank"
                   rel="noopener noreferrer"
                   ariaLabel={social.label}
-                  fillClassName="bg-orange-hover"
+                  fillClassName="bg-orange-primary"
                   className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/15 bg-chalk/40 text-cream shadow-[2px_2px_1px_rgba(0,0,0,0.4)] backdrop-blur-md transition-colors duration-200"
                 >
                   {social.icon}
@@ -346,7 +346,7 @@ export default function Navbar() {
                 <HoverFillLink
                   key={link.href}
                   href={link.href}
-                  fillClassName="bg-orange-hover"
+                  fillClassName="bg-orange-primary"
                   className="rounded-full px-4 py-1.5 font-outfit text-[clamp(0.85rem,1.6vw,0.95rem)] font-medium tracking-[0.3px] text-cream transition-colors duration-200"
                 >
                   {link.label}
