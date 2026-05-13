@@ -8,9 +8,9 @@ import emailjs from "@emailjs/browser";
 gsap.registerPlugin(ScrollTrigger);
 
 // ─── EMAILJS CONFIG ────────────────────────────────────────────────────────
-const EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-const EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";
+const EMAILJS_SERVICE_ID  = "service_5rxosvr";
+const EMAILJS_TEMPLATE_ID = "template_6n484uu";
+const EMAILJS_PUBLIC_KEY  = "ZW4n7_xXUgNZpwNE_";
 
 // ─── DATA ──────────────────────────────────────────────────────────────────
 const TOPICS = [
@@ -255,7 +255,7 @@ export default function ContactPage() {
             duration: 0.75, ease: "cubic-bezier(0.34, 1.56, 0.64, 1)", stagger: 0.045,
             scrollTrigger: {
               trigger: faqRef.current,
-              start: "top 80%",
+              start: "top 70%",
               toggleActions: "play none none reverse",
             },
           }
@@ -442,7 +442,9 @@ export default function ContactPage() {
             {/* Success */}
             {status === "success" && (
               <div className="flex flex-col items-start gap-6 py-16">
-                <span className="text-[clamp(2.2rem,7vw,3rem)]">✉️</span>
+                <span className="size-12 text-orange-primary">
+                  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" className="iconify iconify--carbon" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path fill="currentColor" d="M27.71 4.29a1 1 0 0 0-1.05-.23l-22 8a1 1 0 0 0 0 1.87l8.59 3.43L19.59 11L21 12.41l-6.37 6.37l3.44 8.59A1 1 0 0 0 19 28a1 1 0 0 0 .92-.66l8-22a1 1 0 0 0-.21-1.05"></path></svg>
+                </span>
                 <h3 className="font-caprasimo text-[#1A1A1A] text-[clamp(1.6rem,5vw,2rem)] leading-[1.1]">
                   Message sent.
                 </h3>

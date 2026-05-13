@@ -3,7 +3,7 @@ import type { MenuItem } from "./menu-types";
 export const MENU_ITEMS: MenuItem[] = [
   {
     id: "special-1",
-    title: "Special 1",
+    title: "Peanut Butter Jelly",
     price: "£8.99",
     tags: ["Matcha", "Latte"],
     image: "/coofee.jpg",
@@ -11,7 +11,7 @@ export const MENU_ITEMS: MenuItem[] = [
   },
   {
     id: "special-2",
-    title: "Special 2",
+    title: "Maple Cinnamon",
     price: "£6.75",
     tags: ["Biscoff", "Cookie"],
     image: "/cookie1.jpg",
@@ -19,7 +19,7 @@ export const MENU_ITEMS: MenuItem[] = [
   },
   {
     id: "special-3",
-    title: "Special 3",
+    title: "Cookies & Cream",
     price: "£9.50",
     tags: ["Chocolate", "Cake"],
     image: "/cake1.jpg",
@@ -27,20 +27,12 @@ export const MENU_ITEMS: MenuItem[] = [
   },
   {
     id: "special-4",
-    title: "Special 4",
+    title: "Rhubarb & Custard",
     price: "£7.25",
     tags: ["Caramel", "Latte"],
     image: "/coofee.jpg",
     href: "/find-us",
-  },
-  {
-    id: "special-5",
-    title: "Special 5",
-    price: "£5.95",
-    tags: ["Vanilla", "Slice"],
-    image: "/cake1.jpg",
-    href: "/find-us",
-  },
+  }
 ];
 
 export const CAKES: MenuItem[] = [

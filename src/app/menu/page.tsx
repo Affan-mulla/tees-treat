@@ -32,6 +32,7 @@ const Page = () => {
           duration: 0.6,
           ease: "back.out(2)",
           stagger: 0.04,
+          delay: isPreloaderComplete ? 0.2 : 20,
         },
       );
 
@@ -44,7 +45,7 @@ const Page = () => {
             opacity: 1,
             duration: 0.7,
             ease: "power3.out",
-            delay: 0.7,
+            delay: isPreloaderComplete ? 0.7 : 2.7,
           },
         );
       }

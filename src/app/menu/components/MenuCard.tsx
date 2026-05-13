@@ -24,7 +24,7 @@ export default function MenuCard({ item, className = "" }: MenuCardProps) {
           className="object-cover select-none "
         />
       </div>
-      <div className="p-3 divide-x divide-cream/50 flex">
+      <div className={`p-3 divide-x ${item.id.includes("special") ? "divide-chalk" : "divide-cream/50"} flex`}>
         <div className="w-fit pr-3">
           <h2 className="text-xl tracking-tight">{item.title}</h2>
           <div className="flex gap-2 items-center mt-2">
