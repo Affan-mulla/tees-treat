@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
+import { getLogoMarkup } from "@/lib/logoAnimation";
+import { usePreloader } from "../PreloaderProvider";
 import CTAButton from "../ui/CTAButton";
 import MarqueeStrip from "../ui/MarqueeStrip";
 import SpinningCookie from "../ui/SpinningCookie";
-import Image from "next/image";
-import { usePreloader } from "../PreloaderProvider";
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -18,62 +19,49 @@ export default function Hero() {
   const [logoMarkup, setLogoMarkup] = useState<string | null>(null);
   const { isPreloaderComplete } = usePreloader();
 
-  // ── Fetch SVG logo ───────────────────────────────────────────────
   useEffect(() => {
     let alive = true;
-    fetch("/logo.svg")
-      .then((r) => r.text())
-      .then((t) => { if (alive) setLogoMarkup(t); })
+
+    getLogoMarkup()
+      .then((markup) => {
+        if (alive) {
+          setLogoMarkup(markup);
+        }
+      })
       .catch(() => null);
-    return () => { alive = false; };
+
+    return () => {
+      alive = false;
+    };
   }, []);
 
-  // ── Hide everything immediately so nothing flashes before animation ──
-  // Runs as soon as the component mounts, before paint
   useEffect(() => {
     gsap.set(
       [taglineRef.current, ctaRef.current, cupRef.current, cookieWrapRef.current],
-      { opacity: 0, y: 20 }
+      { opacity: 0, y: 20 },
     );
-    // Logo wrapper hidden until SVG loads
+
     if (logoWrapRef.current) {
       gsap.set(logoWrapRef.current, { opacity: 0 });
     }
   }, []);
 
-  // Also hide logo wrapper whenever logoMarkup first renders into DOM
   useEffect(() => {
     if (!logoMarkup) return;
     gsap.set(logoWrapRef.current, { opacity: 0 });
   }, [logoMarkup]);
 
-  // ── Master animation — only fires when BOTH conditions are true ──
   useEffect(() => {
     if (!isPreloaderComplete || !logoMarkup) return;
 
     const ctx = gsap.context(() => {
       const logoEl = logoWrapRef.current?.querySelector("svg");
-      const paths = logoEl?.querySelectorAll<SVGPathElement>("path");
-      if (!logoEl || !paths?.length) return;
+      if (!logoEl) return;
 
-      // ── 1. Prepare SVG paths for draw animation ──────────────────
-      paths.forEach((path) => {
-        const length = path.getTotalLength();
-        path.dataset.fill = path.getAttribute("fill") || "#1A1A1A";
-        path.style.stroke = "#e8470a";
-        path.style.strokeWidth = "1.2";
-        path.style.fill = "none";
-        path.style.strokeDasharray = `${length}`;
-        path.style.strokeDashoffset = `${length}`;
-      });
-
-      // Make logo wrapper visible now that paths are prepared
       gsap.set(logoWrapRef.current, { opacity: 1 });
 
-      // ── 2. Master timeline — everything sequenced ────────────────
       const tl = gsap.timeline();
 
-      // Tagline fades in first
       tl.to(taglineRef.current, {
         y: 0,
         opacity: 1,
@@ -81,32 +69,6 @@ export default function Hero() {
         ease: "power3.out",
       });
 
-      // Logo paths draw themselves
-      tl.to(
-        paths,
-        {
-          strokeDashoffset: 0,
-          duration: 1.3,
-          ease: "power2.inOut",
-          stagger: { each: 0.006, from: "random" },
-        },
-        "+=0.05"
-      );
-
-      // Fill the paths while still drawing
-      tl.to(
-        paths,
-        {
-          fill: (_i: number, target: Element) =>
-            (target as SVGPathElement).dataset.fill || "#1A1A1A",
-          stroke: "transparent",
-          duration: 0.5,
-          stagger: { each: 0.003, from: "random" },
-        },
-        "-=0.75"
-      );
-
-      // Cup image slides up
       tl.to(
         cupRef.current,
         {
@@ -115,10 +77,9 @@ export default function Hero() {
           duration: 0.9,
           ease: "power3.out",
         },
-        "-=0.4"
+        "-=0.3",
       );
 
-      // Cookie spins in
       tl.to(
         cookieWrapRef.current,
         {
@@ -127,10 +88,9 @@ export default function Hero() {
           duration: 0.8,
           ease: "power3.out",
         },
-        "-=0.6"
+        "-=0.6",
       );
 
-      // CTA button
       tl.to(
         ctaRef.current,
         {
@@ -139,14 +99,13 @@ export default function Hero() {
           duration: 0.6,
           ease: "power3.out",
         },
-        "-=0.3"
+        "-=0.3",
       );
 
-      // Gentle logo float after entrance
       tl.add(() => {
         gsap.to(logoEl, {
           y: -8,
-          duration: 3.0,
+          duration: 3,
           repeat: -1,
           yoyo: true,
           ease: "sine.inOut",
@@ -162,7 +121,6 @@ export default function Hero() {
       ref={sectionRef}
       className="relative min-h-svh w-full bg-cream"
     >
-      {/* Texture overlay */}
       <div
         className="absolute inset-0 pointer-events-none bg-blend-color-burn opacity-70 bg-[url('https://cdn.prod.website-files.com/686c09a33211842a0ac0183d/68b0b1e2ae528702c898a058_pattern.png')]"
         style={{
@@ -171,21 +129,21 @@ export default function Hero() {
         }}
       />
 
-      {/* Main content */}
-      <div className="relative z-10 flex min-h-svh flex-col items-center px-5 md:px-8 lg:px-16 py-32 md:py-24 lg:py-32 text-center">
+      <div className="relative z-10 flex min-h-svh flex-col items-center px-5 py-32 text-center md:px-8 md:py-24 lg:px-16 lg:py-32">
         <p
           ref={taglineRef}
-          className="font-outfit text-[clamp(0.7rem,2.6vw,0.85rem)] uppercase tracking-[2.5px] text-chalk/60 z-10"
-          style={{ opacity: 0 }} // SSR-safe initial hide
+          className="z-10 font-outfit text-[clamp(0.7rem,2.6vw,0.85rem)] uppercase tracking-[2.5px] text-chalk/60"
+          style={{ opacity: 0 }}
         >
           Coffee House &amp; Bakeshop · Rutherglen
         </p>
 
         <div
           ref={logoWrapRef}
-          className="z-10 w-[clamp(260px,75vw,520px)] [&>svg]:w-full [&>svg]:h-auto"
+          className="z-10 aspect-[465/400] w-[clamp(260px,75vw,520px)] [&>svg]:h-auto [&>svg]:w-full"
+          data-hero-logo-target
           aria-label="Tee's Treats logo"
-          style={{ opacity: 0 }} // SSR-safe initial hide
+          style={{ opacity: 0 }}
           dangerouslySetInnerHTML={logoMarkup ? { __html: logoMarkup } : undefined}
           role="img"
         />
@@ -203,19 +161,17 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Spinning cookie */}
       <div
         ref={cookieWrapRef}
-        className="absolute left-10 -translate-x-1/2 bottom-0 md:left-0 md:-translate-x-0 md:-bottom-24 z-20"
+        className="absolute bottom-0 left-10 z-20 -translate-x-1/2 md:-bottom-24 md:left-0 md:-translate-x-0"
         style={{ opacity: 0 }}
       >
         <SpinningCookie />
       </div>
 
-      {/* Cup image */}
       <div
         ref={cupRef}
-        className="block absolute -bottom-10 -right-20 sm:-right-10 z-10 w-[30vw] min-w-[250px] max-w-[420px] aspect-square -rotate-12"
+        className="absolute -right-20 -bottom-10 z-10 block aspect-square w-[30vw] min-w-[250px] max-w-[420px] -rotate-12 sm:-right-10"
         style={{ opacity: 0 }}
       >
         <Image

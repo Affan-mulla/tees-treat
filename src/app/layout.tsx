@@ -130,6 +130,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="google-site-verification" content="Ky0qIfMeU_mpTMGdF8bKz7vGIeDj81FfpP7BXZhB9kY" />
+        <link rel="preload" href="/logo.svg" as="image" type="image/svg+xml" />
         <link rel="preload" href="/cookie.webp" as="image" type="image/webp" />
 
         {/* ── JSON-LD Structured Data — LocalBusiness ──────────────────── */}

@@ -1,145 +1,186 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import {
+  getLogoMarkup,
+  HERO_LOGO_TARGET_SELECTOR,
+  prepareLogoPaths,
+} from "@/lib/logoAnimation";
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
-// ─── CRACK PATH ────────────────────────────────────────────────────────────
-// viewBox: 0 0 390 844
-// Center = x:195. Now drifting ±15px so it's clearly visible as jagged
-// Same path used for stroke AND clipPath — guaranteed to match
-// ──────────────────────────────────────────────────────────────────────────
-const CRACK = [
-  "M 195 0",
-  "L 192 60",
-  "L 200 130",
-  "L 188 200",
-  "L 203 270",
-  "L 186 340",
-  "L 205 410",
-  "L 190 480",
-  "L 202 550",
-  "L 187 620",
-  "L 198 700",
-  "L 193 780",
-  "L 195 844",
-].join(" ");
+function waitForHeroLogoTarget(shouldContinue: () => boolean, timeoutMs = 1200) {
+  return new Promise<HTMLElement | null>((resolve) => {
+    const timeoutId = window.setTimeout(() => {
+      resolve(null);
+    }, timeoutMs);
 
-// Left clip: everything LEFT of crack
-// Crack → bottom-left → top-left → close
-const LEFT_CLIP = `${CRACK} L 0 844 L 0 0 Z`;
+    const findTarget = () => {
+      if (!shouldContinue()) {
+        window.clearTimeout(timeoutId);
+        return;
+      }
 
-// Right clip: everything RIGHT of crack
-// Crack → bottom-right → top-right → close
-const RIGHT_CLIP = `${CRACK} L 390 844 L 390 0 Z`;
+      const target = document.querySelector<HTMLElement>(HERO_LOGO_TARGET_SELECTOR);
+      const rect = target?.getBoundingClientRect();
 
-// Approximate path length for dasharray
-const CRACK_LENGTH = 900;
+      if (target && rect && rect.width > 0 && rect.height > 0) {
+        window.clearTimeout(timeoutId);
+        resolve(target);
+        return;
+      }
+
+      requestAnimationFrame(findTarget);
+    };
+
+    findTarget();
+  });
+}
 
 export default function Preloader({ onComplete }: PreloaderProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
-  const leftGroupRef = useRef<SVGGElement>(null);
-  const rightGroupRef = useRef<SVGGElement>(null);
-  const crackRef = useRef<SVGPathElement>(null);
-  const glowRef = useRef<SVGPathElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const logoWrapRef = useRef<HTMLDivElement>(null);
+  const [logoMarkup, setLogoMarkup] = useState<string | null>(null);
 
   useEffect(() => {
-    // Safety — wait for paint before animating
-    const raf = requestAnimationFrame(() => {
-      const tl = gsap.timeline({
+    let alive = true;
+
+    getLogoMarkup()
+      .then((markup) => {
+        if (alive) {
+          setLogoMarkup(markup);
+        }
+      })
+      .catch(() => null);
+
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!logoMarkup) return;
+
+    let cancelled = false;
+    let rafId = 0;
+    let timeline: gsap.core.Timeline | null = null;
+    const container = containerRef.current;
+    const overlay = overlayRef.current;
+    const logoWrap = logoWrapRef.current;
+
+    const run = async () => {
+      const target = await waitForHeroLogoTarget(() => !cancelled);
+
+      if (cancelled || !container || !overlay || !logoWrap) {
+        return;
+      }
+
+      const logoSvg = logoWrap.querySelector("svg");
+      if (!logoSvg) return;
+
+      const paths = prepareLogoPaths(logoSvg);
+      if (!paths.length) return;
+
+      gsap.set(overlay, { yPercent: 0 });
+      gsap.set(logoWrap, {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        transformOrigin: "center center",
+      });
+
+      const startRect = logoWrapRef.current?.getBoundingClientRect() as DOMRect ;
+      const startCenterX = startRect.left + startRect.width / 2;
+      const startCenterY = startRect.top + startRect.height / 2;
+
+      timeline = gsap.timeline({
         onComplete: () => {
-          if (containerRef.current) {
-            containerRef.current.style.display = "none";
+          if (container) {
+            container.style.display = "none";
           }
           onComplete();
         },
       });
 
-      // ── Set initial states ─────────────────────────────────────────
-      gsap.set([leftGroupRef.current, rightGroupRef.current], {
-        opacity: 0,
-      });
-      gsap.set([crackRef.current, glowRef.current], {
-        strokeDashoffset: CRACK_LENGTH,
-        opacity: 0,
-      });
-
-      // ── 1. Both panels drop in together (one cookie) ───────────────
-      tl.to([leftGroupRef.current, rightGroupRef.current], {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        ease: "back.out(1.4)",
-        stagger: 0,
-      });
-
-      // ── 2. Hold ────────────────────────────────────────────────────
-      tl.to({}, { duration: 0.5 });
-
-      // ── 3. Crack draws itself down ─────────────────────────────────
-      tl.to([crackRef.current, glowRef.current], {
-        opacity: 1,
-        duration: 0.05,
-      });
-      tl.to([crackRef.current, glowRef.current], {
+      timeline.to(paths, {
         strokeDashoffset: 0,
-        duration: 0.5,
+        duration: 1,
         ease: "power2.inOut",
+        stagger: { each: 0.006, from: "random" },
       });
 
-      // ── 5. Brief pause ─────────────────────────────────────────────
-      tl.to({}, { duration: 0.15 });
-
-      // ── 6. SPLIT — left flies left, right flies right ──────────────
-      tl.to(
-        [crackRef.current, glowRef.current],
+      timeline.to(
+        paths,
         {
-          opacity: 0,
-          duration: 0.1,
+          fill: (_index: number, targetPath: Element) =>
+            (targetPath as SVGPathElement).dataset.fill || "#1A1A1A",
+          stroke: "transparent",
+          duration: 0.5,
+          stagger: { each: 0.003, from: "random" },
         },
-        "split",
+        "-=0.75",
       );
 
-      tl.to(
-        leftGroupRef.current,
+      timeline.to(
+        overlay,
         {
-          x: -500,
-          duration: 0.75,
-          ease: "power4.in",
+          yPercent: -100,
+          duration: 0.95,
+          ease: "power4.inOut",
         },
-        "split",
+        "reveal",
       );
 
-      tl.to(
-        rightGroupRef.current,
-        {
-          x: 500,
-          duration: 0.75,
-          ease: "power4.in",
-        },
-        "split",
-      );
+      if (target) {
+        const targetRect = target.getBoundingClientRect();
+        const targetCenterX = targetRect.left + targetRect.width / 2;
+        const targetCenterY = targetRect.top + targetRect.height / 2;
+
+        timeline.to(
+          logoWrap,
+          {
+            x: targetCenterX - startCenterX,
+            y: targetCenterY - startCenterY,
+            scale: targetRect.width / startRect.width,
+            duration: 1,
+            ease: "expo.inOut",
+          },
+          "reveal+=0.04",
+        );
+      } else {
+        timeline.to(
+          logoWrap,
+          {
+            opacity: 0,
+            duration: 0.35,
+            ease: "power2.out",
+          },
+          "reveal+=0.08",
+        );
+      }
+    };
+
+    rafId = requestAnimationFrame(() => {
+      void run();
     });
 
     return () => {
-      cancelAnimationFrame(raf);
-      gsap.killTweensOf([
-        leftGroupRef.current,
-        rightGroupRef.current,
-        crackRef.current,
-        glowRef.current,
-        svgRef.current,
-      ]);
+      cancelled = true;
+      cancelAnimationFrame(rafId);
+      timeline?.kill();
+      gsap.killTweensOf([overlay, logoWrap]);
     };
-  }, [onComplete]);
+  }, [logoMarkup, onComplete]);
 
   return (
     <div
       ref={containerRef}
+      data-preloader
       style={{
         position: "fixed",
         inset: 0,
@@ -147,82 +188,21 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         overflow: "hidden",
       }}
     >
-      <svg
-        ref={svgRef}
-        width="100%"
-        height="100%"
-        viewBox="0 0 390 844"
-        preserveAspectRatio="xMidYMid slice"
-        style={{ display: "block" }}
-      >
-        <defs>
-          {/* Left half — everything left of the crack line */}
-          <clipPath id="tt-left-clip" clipPathUnits="userSpaceOnUse">
-            <path d={LEFT_CLIP} />
-          </clipPath>
+      <div
+        ref={overlayRef}
+        data-preloader-overlay
+        className="absolute inset-0 bg-chalk"
+      />
 
-          {/* Right half — everything right of the crack line */}
-          <clipPath id="tt-right-clip" clipPathUnits="userSpaceOnUse">
-            <path d={RIGHT_CLIP} />
-          </clipPath>
-        </defs>
-
-        {/* ── LEFT GROUP — clipped to left of crack ──────────────────── */}
-        <g ref={leftGroupRef} clipPath="url(#tt-left-clip)">
-          {/* Orange background fills full canvas — clip cuts it */}
-          <rect width="390" height="844" fill="#E8470A" />
-          <image
-            xlinkHref="/cookie.webp"
-            href="/cookie.webp"
-            x="32%"
-            y="32%"
-            width="36%"
-            height="36%"
-            preserveAspectRatio="xMidYMid meet"
-          />
-        </g>
-
-        {/* ── RIGHT GROUP — clipped to right of crack ─────────────────── */}
-        <g ref={rightGroupRef} clipPath="url(#tt-right-clip)">
-          <rect width="390" height="844" fill="#E8470A" />
-          <image
-            xlinkHref="/cookie.webp"
-            href="/cookie.webp"
-            x="32%"
-            y="32%"
-            width="36%"
-            height="36%"
-            preserveAspectRatio="xMidYMid meet"
-            
-          />
-        </g>
-
-        {/* ── CRACK — drawn on top of both groups ────────────────────── */}
-        {/* Glow */}
-        <path
-          ref={glowRef}
-          d={CRACK}
-          stroke="rgba(255,255,255,0.35)"
-          strokeWidth="6"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeDasharray={CRACK_LENGTH}
-          strokeDashoffset={CRACK_LENGTH}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div
+          ref={logoWrapRef}
+          className="aspect-[465/400] w-[clamp(260px,46vw,420px)] [&>svg]:h-auto [&>svg]:w-full"
+          style={{ opacity: 0 }}
+          dangerouslySetInnerHTML={logoMarkup ? { __html: logoMarkup } : undefined}
+          aria-hidden="true"
         />
-        {/* Main crack */}
-        <path
-          ref={crackRef}
-          d={CRACK}
-          stroke="#FFF5EC"
-          strokeWidth="2"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeDasharray={CRACK_LENGTH}
-          strokeDashoffset={CRACK_LENGTH}
-        />
-      </svg>
+      </div>
     </div>
   );
 }
