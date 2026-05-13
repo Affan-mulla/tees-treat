@@ -6,11 +6,14 @@ import type { MenuItem } from "../menu-types";
 
 interface MenuCardProps {
   item: MenuItem;
+  className?: string;
 }
 
-export default function MenuCard({ item }: MenuCardProps) {
+export default function MenuCard({ item, className = "" }: MenuCardProps) {
   return (
-    <div className="p-2 rounded-4xl shadow-[0px_0px_0px_1px_rgba(0,0,0,0.04),0px_1px_1px_0px_rgba(0,0,0,0.05),0px_2px_2px_0px_rgba(0,0,0,0.05),0px_2px_4px_0px_rgba(0,0,0,0.05)] w-fit min-w-[250px] max-w-[250px] bg-chalk text-cream select-none">
+    <div
+      className={`w-fit min-w-[250px] max-w-[250px] select-none rounded-4xl bg-chalk p-2  shadow-[0px_0px_0px_1px_rgba(0,0,0,0.04),0px_1px_1px_0px_rgba(0,0,0,0.05),0px_2px_2px_0px_rgba(0,0,0,0.05),0px_2px_4px_0px_rgba(0,0,0,0.05)] ${className}`}
+    >
       <div className="relative w-full max-w-[250px] h-[250px] overflow-hidden rounded-3xl">
         <Image
           src={item.image}
@@ -28,7 +31,7 @@ export default function MenuCard({ item }: MenuCardProps) {
             {item.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-xs text-chalk bg-cream px-2 py-0.5 rounded-full"
+                className={`text-xs ${item.id.includes("special") ? "bg-orange-primary text-cream" : "bg-cream text-chalk"} px-2 py-0.5 rounded-full`}
               >
                 {tag}
               </span>
